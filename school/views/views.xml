@@ -31,7 +31,7 @@
 
     <record model="ir.actions.act_window" id="school.action_course_window">
       <field name="name">school course window</field>
-      <field name="res_model">school.topic</field>
+      <field name="res_model">school.course</field>
       <field name="view_mode">tree,form</field>
     </record>
 
