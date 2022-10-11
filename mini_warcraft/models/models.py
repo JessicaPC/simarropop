@@ -1,22 +1,28 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+
 import random
 
 class player(models.Model):
-     _name = 'miniWarcraft.player'
-     _description = 'Players of the Game'
+    _name = 'mini_warcraft.player'
+    _description = 'Players of the game'
 
-     def get_name(self):  # tindre un def diferent en el proyecte
-         nombre = ["Thrall", "Anduin","Jaina"]
-         apellido = ["Garcia", "Valiente","caca"]
-         print("************************Nombre generado")
-         return random.choice(nombre) + " " + random.choice(apellido)
+    name = fields.Char(string="Nombre", required=True)
+    password = fields.Char()
+    avatar = fields.Image(max_width = 200, max_height=200)
+    
 
-     name = fields.Char(required=True, default=get_name())
-     password = fields.Char()
-     avatar = fields.image(max_width=200, max_height=200)
+class bando(models.Model):
+    _name = 'mini_warcraft.bando'
+    _description = 'Bandos'
 
+    type = fields.Selection([('1','Alianza'),('2','Horda')])
+    name = fields.Selection(selection='a_function_name')
+   
+# class mini_warcraft(models.Model):
+#     _name = 'mini_warcraft.mini_warcraft'
+#     _description = 'mini_warcraft.mini_warcraft'
 
 #     name = fields.Char()
 #     value = fields.Integer()
