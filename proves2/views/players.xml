@@ -1,0 +1,42 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="player.tree">
+      <field name="name">expanse list</field>
+      <field name="model">expanse.player</field>
+      <field name="arch" type="xml">
+        <tree>
+        <group>
+          <field name="name" widget="image"/>
+          <field name="avatar"/>
+          <field name="password"/>
+          </group>
+          <notebook>
+          <page string="Colonies">
+             <field name="colonies.qty"/>
+             <field name="colonies"/>
+          </page>
+         </notebook>
+        </tree>
+      </field>
+    </record>
+-->
+    <record model="ir.ui.view" id="player.tree">
+      <field name="name">expanse list</field>
+      <field name="model">expanse.player</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" widget="image"/>
+          <field name="avatar" widget="image"/>
+          <field name="password"/>
+          <field name="colonies.qty"/>
+          <field name="colonies"/>
+        </tree>
+      </field>
+    </record>
+
+
+
+  </data>
+</odoo>

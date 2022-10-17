@@ -1,0 +1,89 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!-- Te que tindre TREE y FORMS-->
+    <record model="ir.ui.view" id="battlewarcraft.list">
+      <field name="name">battlewarcraft list</field>
+      <field name="model">battlewarcraft.player</field>
+      <field name="view_mode">tree,form</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="bando" widget="image"/>
+          <field name="avatar" widget="image"/>
+          <field name="password"/>
+        </tree>
+      </field>
+    </record>
+<!--
+   <form string="Player form">
+        <sheet>
+            <group>
+              <field name="name"/>
+              <field name="avatar" widget="image"/>
+            </group>
+          
+            <group>
+            <field name="password"/>
+            </group>
+          
+        </sheet>
+        </form>
+-->
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="battlewarcraft.action_player_window">
+      <field name="name">battleWarcraft player window</field>
+      <field name="res_model">battlewarcraft.player</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="battlewarcraft.action_bando_window">
+      <field name="name">battleWarcraft bando window</field>
+      <field name="res_model">battlewarcraft.bando</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="battlewarcraft.action_server">
+      <field name="name">battlewarcraft server</field>
+      <field name="model_id" ref="model_battlewarcraft_battlewarcraft"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+    <menuitem name="battlewarcraft" id="battlewarcraft.menu_root"/>
+<!--
+    <menuitem name="battlewarcraft" id="battlewarcraft.menu_root"/>
+-->
+    <!-- menu categories -->
+     <menuitem name="Management" id="battlewarcraft.menu_1" parent="battlewarcraft.menu_root"/>
+
+<!--
+    <menuitem name="Menu 1" id="battlewarcraft.menu_1" parent="battlewarcraft.menu_root"/>
+    <menuitem name="Menu 2" id="battlewarcraft.menu_2" parent="battlewarcraft.menu_root"/>
+-->
+    <!-- actions -->
+     <menuitem name="Players" id="battlewarcraft.menu_school_players" parent="battlewarcraft.menu_1"
+              action="battlewarcraft.action_player_window"/>
+
+    <menuitem name="Bandos" id="battlewarcraft.menu_school_bandos" parent="battlewarcraft.menu_1"
+              action="battlewarcraft.action_bando_window"/>
+<!--
+    <menuitem name="List" id="battlewarcraft.menu_1_list" parent="battlewarcraft.menu_1"
+              action="battlewarcraft.action_window"/>
+    <menuitem name="Server to list" id="battlewarcraft" parent="battlewarcraft.menu_2"
+              action="battlewarcraft.action_server"/>
+-->
+  </data>
+</odoo>

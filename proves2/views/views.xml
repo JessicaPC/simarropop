@@ -7,9 +7,17 @@
       <field name="model">expanse.player</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
-          <field name="colonies.qty"/>
-          <field name="colonies"/>
+        <group>
+          <field name="name" widget="image"/>
+          <field name="avatar"/>
+          <field name="password"/>
+          </group>
+          <notebook>
+          <page string="Colonies">
+             <field name="colonies.qty"/>
+             <field name="colonies"/>
+          </page>
+         </notebook>
         </tree>
       </field>
     </record>

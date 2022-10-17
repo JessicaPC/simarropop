@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "proves2",
+    'name': "battlewarcraft",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -25,7 +25,6 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/players.xml',
         'views/views.xml',
         'views/templates.xml',
     ],

@@ -16,6 +16,7 @@ class player(models.Model):
     name = fields.Char(required=True, default=get_name())
     password = fields.Char()
     avatar = fields.image(max_width = 200, max_height=200)
+    avatar_tuab = fields.image(related="avatar",max_width = 200, max_height=200)
     colonies = fields.One2many('expanse.colony', 'player')
     colonies_qty = fields.Integer(compute="get_colonies_qty") #quantitat de colonies
 
