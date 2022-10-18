@@ -1,21 +1,72 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
-<!-- Te que tindre TREE y FORMS-->
-    <record model="ir.ui.view" id="battlewarcraft.list">
+<!-- Te que tindre TREE(tree dins dun form) y FORMS-->
+   <record model="ir.ui.view" id="battlewarcraft.list">
       <field name="name">battlewarcraft list</field>
       <field name="model">battlewarcraft.player</field>
-      <field name="view_mode">tree,form</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
-          <field name="bando" widget="image"/>
-          <field name="avatar" widget="image"/>
-          <field name="password"/>
+          <field name = "name"/>
+          <field name = "avatar_mini" widget="image"/>
+          <field name = "bandoimg_mini" widget="image" />
         </tree>
       </field>
-    </record>
+    </record> 
+
+  <!-- vista edicio 
+    <record model="ir.ui.view" id="battlewarcraft.playerform">
+      <field name="name">battlewarcraft list</field>
+      <field name="model">battlewarcraft.player</field>
+      <field name="arch" type="xml">
+        <form>
+          <field name = "name"/>
+          <field name = "avatar" widget="image"/>
+          <field name = "bando" />
+        </form>
+      </field>
+    </record> 
+-->
+
+    <record model="ir.ui.view" id="battlewarcraft.bandos">
+      <field name="name">battlewarcraft bandos</field>
+      <field name="model">battlewarcraft.bando</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name = "name"/>
+          <field name = "bandoimg" widget="image"/>
+        </tree>
+      </field>
+    </record> 
+
+
+    
+
+
+
 <!--
+
+    <form>
+            <group>
+            </group>
+            <sheet>
+              <group>
+              <field name = "name"/>
+              <field name = "avatar" widget="image"/>
+            </group>
+
+            <group>
+              <field name = "bando" widget="image"/>
+            </group>
+            </sheet>
+            
+          
+          
+            </form>
+        </tree>
+      </field>
+
+
    <form string="Player form">
         <sheet>
             <group>
@@ -29,6 +80,11 @@
           
         </sheet>
         </form>
+
+
+        <field name="name"/>
+          <field name="avatar" widget="image"/>
+          <field name="password"/>
 -->
 
     <!-- actions opening views on models -->

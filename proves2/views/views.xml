@@ -6,7 +6,7 @@
       <field name="name">expanse list</field>
       <field name="model">expanse.player</field>
       <field name="arch" type="xml">
-        <tree>
+        <tree decoration-info ="" >
         <group>
           <field name="name" widget="image"/>
           <field name="avatar"/>
