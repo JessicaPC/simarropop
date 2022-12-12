@@ -1,0 +1,18 @@
+  <odoo>
+    <data>
+    
+                    <!-- BANDOS -->
+<record model="ir.ui.view" id="warcraft1.bandos">
+      <field name="name">warcraft1 list</field>
+      <field name="model">warcraft1.bando</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name = "name"  />
+          <field name = "bandoimg_mini" widget="image" />
+        </tree>
+      </field>
+    </record> 
+
+
+  </data>
+</odoo>

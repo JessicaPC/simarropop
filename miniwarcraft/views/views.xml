@@ -1,0 +1,158 @@
+<odoo>
+  <data>
+  <!-- kanban dels models mes importants-->
+  <!--  "search" tots els models que tinguen una vista-->
+  
+ <record model="ir.ui.view" id="miniwarcraft_search">
+      <field name="name">miniwarcraft list</field>
+      <field name="model">miniwarcraft.player</field>
+      <field name="arch" type="xml">
+        <search >
+          <field name = "name"  />
+          <field name = "avatar_mini" widget="image"/>
+          <field name = "bandoimg_mini" widget="image" />
+          <field name = "bando" />
+          <field name = "password" password="True" />
+          <field name="bando" string="bandos" filter_domain="['|',('bando','=','Alliance'),('bando','=','Horde'')]"/>
+        </search>
+      </field>
+    </record> 
+
+
+<!-- MANY2MANY COMPUTED-->
+<!--
+
+    <form>
+            <group>
+            </group>
+            <sheet>
+              <group>
+              <field name = "name"/>
+              <field name = "avatar" widget="image"/>
+            </group>
+
+            <group>
+              <field name = "bando" widget="image"/>
+            </group>
+            </sheet>
+            
+          
+          
+            </form>
+        </tree>
+      </field>
+
+
+   <form string="Player form">
+        <sheet>
+            <group>
+              <field name="name"/>
+              <field name="avatar" widget="image"/>
+            </group>
+          
+            <group>
+            <field name="password"/>
+            </group>
+          
+        </sheet>
+        </form>
+
+
+        <field name="name"/>
+          <field name="avatar" widget="image"/>
+          <field name="password"/>
+-->
+
+
+    <!-- actions opening views on models -->
+     <record model="ir.actions.act_window" id="miniwarcraft.action_player_window">
+      <field name="name">miniwarcraft player window</field>
+      <field name="res_model">miniwarcraft.player</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="miniwarcraft.action_bando_window">
+      <field name="name">miniwarcraft bando window</field>
+      <field name="res_model">miniwarcraft.bando</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="miniwarcraft.action_building_window">
+      <field name="name">miniwarcraft building window</field>
+      <field name="res_model">miniwarcraft.building</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+     <record model="ir.actions.act_window" id="miniwarcraft.action_building_type_window">
+      <field name="name">miniwarcraft building_type window</field>
+      <field name="res_model">miniwarcraft.building_type</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+     <record model="ir.actions.act_window" id="miniwarcraft.action_battle_window">
+      <field name="name">miniwarcraft battle window</field>
+      <field name="res_model">miniwarcraft.battle</field>
+      <field name="view_mode">tree,form,calendar</field>
+    </record>
+   
+
+<!--
+    <record model="ir.actions.act_window" id="miniwarcraft.action_window">
+      <field name="name">miniwarcraft window</field>
+      <field name="res_model">miniwarcraft.miniwarcraft</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="miniwarcraft.action_server">
+      <field name="name">miniwarcraft server</field>
+      <field name="model_id" ref="model_miniwarcraft_miniwarcraft"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+     <menuitem name="miniwarcraft" id="miniwarcraft.menu_root"/>
+<!--
+    <menuitem name="miniwarcraft" id="miniwarcraft.menu_root"/>
+-->
+    <!-- menu categories -->
+    <menuitem name="Menu" id="miniwarcraft.menu_1" parent="miniwarcraft.menu_root"/>
+<!--
+    <menuitem name="Menu 1" id="miniwarcraft.menu_1" parent="miniwarcraft.menu_root"/>
+    <menuitem name="Menu 2" id="miniwarcraft.menu_2" parent="miniwarcraft.menu_root"/>
+-->
+    <!-- actions -->
+    <menuitem name="Jugadores" id="miniwarcraft.menu_players" parent="miniwarcraft.menu_1"
+              action="miniwarcraft.action_player_window"/>
+
+    <menuitem name="Bandos" id="miniwarcraft.menu_bandos" parent="miniwarcraft.menu_1"
+              action="miniwarcraft.action_bando_window"/>
+            
+    <menuitem name="Edificio" id="miniwarcraft.menu_buildings" parent="miniwarcraft.menu_1"
+              action="miniwarcraft.action_building_window"/>
+
+
+    <menuitem name="Tipo de Edificios" id="miniwarcraft.menu_buildings_type" parent="miniwarcraft.menu_1"
+              action="miniwarcraft.action_building_type_window"/>
+
+    <menuitem name="Batallas" id="miniwarcraft.menu_battles" parent="miniwarcraft.menu_1"
+              action="miniwarcraft.action_battle_window"/>
+<!--
+    <menuitem name="List" id="miniwarcraft.menu_1_list" parent="miniwarcraft.menu_1"
+              action="miniwarcraft.action_window"/>
+    <menuitem name="Server to list" id="miniwarcraft" parent="miniwarcraft.menu_2"
+              action="miniwarcraft.action_server"/>
+-->
+  </data>
+</odoo>

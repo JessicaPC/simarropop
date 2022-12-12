@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_miniwarcraft_player,miniwarcraft.player,model_miniwarcraft_player,base.group_user,1,1,1,1
+access_miniwarcraft_bando,miniwarcraft.bando,model_miniwarcraft_bando,base.group_user,1,1,1,1
+access_miniwarcraft_building,miniwarcraft.building,model_miniwarcraft_building,base.group_user,1,1,1,1
+access_miniwarcraft_building,miniwarcraft.building,model_miniwarcraft_building,base.group_user,1,1,1,1
+access_miniwarcraft_battle,miniwarcraft.battle,model_miniwarcraft_battle,base.group_user,1,1,1,1

@@ -1,0 +1,220 @@
+
+<odoo>
+    <data>
+    <record model="ir.ui.view" id="warcraft1.colonytree">
+      <field name="name">warcraft1 colony list </field>
+      <field name="model">warcraft1.colony</field>
+      <field name="arch" type="xml">
+        <tree>
+                <field name="name"/>
+                <field name="money"/>
+                <field name="water"/>
+                <field name="metal"/>
+                <field name="wood"/>
+                <field name="food"/>
+          
+        </tree>
+      </field>
+    </record>
+
+ 
+    <record model="ir.ui.view" id="warcraft1.coloniesform">
+      <field name="name">warcraft1 colonyForm</field>
+      <field name="model">warcraft1.colony</field>
+      <field name="arch" type="xml">
+        <form string="Battle warcraft form">
+
+          <sheet>
+                <group>
+                    <field name = "name" />
+                    <field name = "player" />  
+                    <field name = "player_avatar" widget="image" />
+                    <field name = "money" />
+                  </group>
+
+                  
+                <group>
+                    <field name="water"/>
+                    <field name="metal"/>
+                    <field name="wood"/>
+                    <field name="food"/>
+                </group>
+
+                <notebook>
+                     <page string="Buildings">
+                        <group>
+                  <!-- FIELD BUILDING-->      
+                            <field name="buildings" mode="tree">
+                                <tree>
+                                    <field name="image" widget="image"/>
+                                    <field name="name"/>
+                                    <field name="level"/>
+                                </tree>
+                            </field>
+                <!-- FIELD BUILDINGS AVAILABLE-->  
+                            <field name="buildings_available" mode="kanban">
+                                <kanban>
+                                    <field name="id"/>
+                                    <field name="image"/>
+                                    <field name="name"/>
+
+                                    <!-- DINS KANBAN-->
+                                    <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
+                                                        <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
+                                                             t-attf-style="background-image:url('#{kanban_image('warcraft1.building_type',
+                     'image', record.id.value, placeholder)}')">
+                                                        </div>
+
+                                                        <div class="oe_kanban_details d-flex flex-column">
+                                                            <a type="open">
+                                                                <h4 class="o_kanban_record_title oe_partner_heading"><field name="name"/></h4></a>
+                                                            <ul>
+                                                                <li>Price Base: <field name="cost_structure"/></li>
+                                                                <li>Water: <field name="water_production"/></li>
+                                                                <li>Metal: <field name="metal_production"/></li>
+                                                                <li>Wood: <field name="wood_production"/></li>
+                                                                <li>Food: <field name="food_production"/></li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="oe_kanban_details d-flex flex-column">
+                                                            <button name="build"
+                                                                    type="object"
+                                                                    string="Build"
+                                                                    class="btn btn-primary"
+                                                                    context="{'ctx_colony':parent.id}"
+                                                            >Build</button>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                </kanban>
+                            </field>
+                        </group>
+                     </page>
+                </notebook>
+                <!-- 
+                    <field name = "buildings_available" />
+                    <field name = "hall_level" />
+                    <field name = "required_money_hall" />
+             -->
+          </sheet>
+               
+        </form>
+      </field>
+    </record> 
+
+<!-- BOTONES 
+<record model="ir.ui.view" id="warcraft1.colony_form">
+            <field name="name">warcraft1 list</field>
+            <field name="model">warcraft1.colony</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <sheet>
+ <div class="oe_button_box" name="button_box">
+
+                                    <div class="oe_button_box">
+                                        <button type="object" class="oe_stat_button" icon="fa-fighter-jet" name="update_hall">
+                                            <div class="o_form_field o_stat_info">
+                                                <span class="o_stat_value">
+                                                    <field name="required_money_hall" string="Money"/>
+                                                </span>
+                                                <span class="o_stat_text">Update Hall</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                        <h2><field name="name"/></h2>
+                        <group>
+
+                            <group>
+
+                                <field name="player_avatar" widget="image"/>
+                                <field name="player"/>
+                                <field name="money"/>
+                            </group>
+
+                            <group>
+
+                                <field name="water"/>
+                                <field name="energy"/>
+                                <field name="metal"/>
+                                <field name="wood"/>
+                                <field name="food"/>
+                            </group>
+
+                        </group>
+                        <notebook>
+                            <page string="Buildings">
+                                <group>
+                                    <field name="buildings" mode="tree">
+                                        <tree decoration-danger="stopped == True">
+                                             <field name="stopped" invisible="True" />
+                                            <field name="name"/>
+                                            <field name="level"/>
+                                             <button name="update_level"
+                                                                    type="object"
+                                                                    string="Update"
+                                                                    class="btn btn-primary"
+                                                            ></button>
+                                            <field name="water_production"/>
+                                            <field name="energy_production"/>
+                                            <field name="metal_production"/>
+                                            <field name="hydrogen_production"/>
+                                        </tree>
+                                    </field>
+                                    <field name="buildings_available" mode="kanban">
+                                        <kanban>
+                                            <field name="id"/>
+                                            <field name="image"/>
+                                            <field name="name"/>
+
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
+                                                        <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
+                                                             t-attf-style="background-image:url('#{kanban_image('warcraft1.building_type',
+                     'image', record.id.value, placeholder)}')">
+                                                        </div>
+
+                                                        <div class="oe_kanban_details d-flex flex-column">
+                                                            <a type="open">
+                                                                <h4 class="o_kanban_record_title oe_partner_heading"><field name="name"/></h4></a>
+                                                            <ul>
+                                                                <li>Price Base: <field name="price_base"/></li>
+                                                                <li>Water: <field name="water_production"/></li>
+                                                                <li>Metal: <field name="metal_production"/></li>
+                                                                <li>Hydrogen: <field name="wood_production"/></li>
+                                                                <li>Food: <field name="food_production"/></li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="oe_kanban_details d-flex flex-column">
+                                                            <button name="build"
+                                                                    type="object"
+                                                                    string="Build"
+                                                                    class="btn btn-primary"
+                                                                    context="{'ctx_colony':parent.id}"
+                                                            >Build</button>
+                                                        </div>
+                                                    </div>
+
+
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+                                </group>
+                            </page>
+                          
+                        </notebook>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+ -->
+  </data>
+</odoo>

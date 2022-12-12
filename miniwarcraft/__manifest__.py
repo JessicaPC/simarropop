@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "proves2",
+    'name': "miniwarcraft",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,15 +20,17 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','mail'],
+    'depends': ['base'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
         'views/players.xml',
+        'views/bandos.xml',
+        'views/buildings.xml',
+        'views/battles.xml',
         'views/views.xml',
         'views/templates.xml',
-        'demo/data.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -1,0 +1,120 @@
+  <odoo>
+    <data>
+  <!-- explicit list view definition -->
+
+   <record model="ir.ui.view" id="miniwarcraft.list">
+      <field name="name">miniwarcraft list</field>
+      <field name="model">miniwarcraft.player</field>
+      <field name="arch" type="xml">
+        <tree decoration-info="bando == 1" decoration-danger="bando == 2" >
+          <field name = "name"  />
+          <field name = "avatar_mini" widget="image"/>
+          <field name = "bandoimg_mini" widget="image" />
+          <field name = "bando" />
+          <field name = "password" password="True" />
+          <field name = "fecha_registro" />
+
+        </tree>
+      </field>
+    </record> 
+
+  <!-- vista edicio 
+ Te que tindre TREE(tree dins dun form) y FORMS diferent id -->
+ 
+    <record model="ir.ui.view" id="miniwarcraft.playerform">
+      <field name="name">miniwarcraft list</field>
+      <field name="model">miniwarcraft.player</field>
+      <field name="arch" type="xml">
+        <form string="Battle warcraft form">
+     
+          <sheet>
+                <group>
+                  <field name = "name" placeholder="Nombre Jugador" style="color:red;"/>
+                  <field name = "avatar" widget="image"/>
+                  <field name = "bando" widget="radio"/>
+                 
+                  </group>
+            
+
+           <notebook>
+            <page>
+                  <group>
+                    <field name = "bandoimg" widget="image"/>
+                     <field name = "password" placeholder="Escribe una contraseña" />  
+                     <field name = "fecha_registro" />
+                               
+                  </group>
+              </page>
+            </notebook>
+          </sheet>
+   
+        </form>
+      </field>
+    </record> 
+
+<!-- KANBAN -->
+    <record model="ir.ui.view" id="miniwarcraft.kanbanview">
+        	<field name="name">miniwarcraft kanban view</field>
+        	<field name="model">miniwarcraft.player</field>
+        	<field name="arch" type="xml">
+            	<kanban>
+            	<!-- Estos fields se cargan inicialmente y pueden ser utilizados
+            	por la lógica del Kanban -->
+                	<field name="name" />
+                	<field name="id" /> <!-- Es importante añadir el id para el
+                	record.id.value posterior -->
+                	<field name="avatar_mini" />
+                  <field name = "fecha_registro" />
+                	<templates>
+                    	<t t-name="kanban-box">
+                        	<div class="oe_product_vignette"> 
+                           <!-- Aprovechando un CSS de products -->
+                            	<a type="open">
+                                	<img class="o_image_64_contain"
+                                     	t-att-alt="record.name.value"
+                                     	t-att-src="kanban_image('miniwarcraft.player', 'avatar_mini', record.id.raw_value)" />
+                            	</a>
+                    <!-- Para obtener la imagen necesitamos una función javascript 
+                         que proporciona Odoo Llamada kanban-image y esta necesita 
+                         el nombre del modelo, el field y el id para encontrarla -->
+                   <!-- record es una variable que tiene QWeb para acceder a las 
+                        propiedades del registro que estamos mostrando. Las propiedades
+                        accesibles son las que hemos puesto en los fields de arriba. -->
+                            	<div class="oe_product_desc">
+                                	<h4>
+                                    <a type="edit"> <!-- Abre un formulario de edición -->
+                                        	  <field name="id"></field>
+                                        	  <field name="name"></field>
+                                            <field name ="fecha_registro" />
+                                          
+                                    </a>
+                                	</h4>
+                            	</div>
+                        	</div>
+                    	</t>
+                	</templates>
+            	</kanban>
+        	</field>
+    	</record>
+
+<!--Kanban dins dun form-->
+
+
+<!-- SEARCH-->
+
+   <record model="ir.ui.view" id="miniwarcraft.player_search">
+      <field name="name">miniwarcraft player search</field>
+      <field name="model">miniwarcraft.player</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name = "name"  />
+          <field name = "bando" />
+          <filter name="group_by_bando" string="Tipo Bando" context="{'group_by': 'bando'}"/>
+
+        </search>
+      </field>
+    </record> 
+
+
+  </data>
+</odoo>

@@ -1,9 +1,12 @@
 <odoo>
     <data>
 
-          <record id="expanse.building_solar_panel" model="proves2.building">
+          <record id="expanse.building_type_solar_panel" model="expanse_type">
             <field name="name">Solar Panel</field>
-            <field name="type" ref="expanse.building_type_solar_panel"></field>
+            <field name="value">0</field>
+             <field name="price_base">10</field>
+              <field name="water_production">0</field>
+               <field name="energy_consumption">25</field>
           </record>
 <!--
           <record id="object1" model="proves2.proves2">

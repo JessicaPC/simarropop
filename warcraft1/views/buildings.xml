@@ -1,0 +1,147 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="warcraft1.building_tree">
+      <field name="name">warcraft1 list</field>
+      <field name="model">warcraft1.building</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="image" widget="image"/>
+          <field name="type"/>
+          <field name="level"/>
+          <field name="experience"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="warcraft1.building_type_tree">
+      <field name="name">warcraft1 list</field>
+      <field name="model">warcraft1.building_type</field>
+      <field name="arch" type="xml">
+        <tree decoration-info="bando == 1" decoration-danger="bando == 2">
+          <field name="name"/>
+          <field name="image" widget="image"/>
+          <field name="bando"/>
+          <field name="hp_structure"/>
+          <field name="cost_structure"/>
+
+        </tree>
+      </field>
+    </record>
+
+<!-- 
+    <record model="ir.ui.view" id="warcraft1.building_form">
+      <field name="name">warcraft1 list</field>
+      <field name="model">warcraft1.building</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="produce_building" type="object" string="Produce" class="oe_highlight" />
+          </header>
+          <sheet>
+
+            <group>
+              <group string="Basic data">
+                <field name="name"/>
+                 <field name="temporal"/>
+                <field name="image" widget="image"/>
+                <field name="type"/>
+
+                <field name="level"/>
+                <field name="price_base"/>
+              </group>
+              <group>
+                <field name="water_production" attrs="{'invisible': [('water_production','==',0)]}"/>
+                <field name="energy_production"  attrs="{'invisible': [('energy_production','==',0)]}"/>
+                <field name="metal_production" attrs="{'invisible': [('metal_production','==',0)]}"/>
+                <field name="wood_production" attrs="{'invisible': [('wood_production','==',0)]}"/>
+
+              </group>
+
+
+
+            </group>
+            <notebook>
+              <page string="">
+                <group>
+
+                </group>
+              </page>
+            </notebook>
+
+
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="warcraft1.building_kanban">
+      <field name="name">warcraft1 kanban</field>
+      <field name="model">warcraft1.building</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="id"/>
+          <field name="name"/>
+          <field name="image"/>
+          <field name="type"/>
+          <field name="level"/>
+          <field name="colony"/>
+          <field name="price_base"/>
+          <field name="water_production"/>
+          <field name="energy_production"/>
+          <field name="metal_production"/>
+          <field name="wood_production"/>
+
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_card o_kanban_record_has_image_fill ">
+                <div class="o_kanban_image_fill_left o_kanban_image_full d-none d-md-block"
+                     t-attf-style="background-image:url('#{kanban_image('warcraft1.building',
+                     'image', record.id.value, placeholder)}')">
+                </div>
+
+                <div class="oe_kanban_details d-flex flex-column">
+                  <a type="open">
+                    <h4 class="o_kanban_record_title oe_partner_heading"><field name="name"/></h4></a>
+                  <ul>
+                    <li>water_production: <field name="water_production"/></li>
+
+                  </ul>
+                </div>
+              </div>
+
+
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="warcraft1.building_search">
+      <field name="name">warcraft1 search</field>
+      <field name="model">warcraft1.building</field>
+      <field name="arch" type="xml">
+        <search >
+          <field name="name"/>
+          <field name="type"/>
+          <field name="level"/>
+          <field name="colony"/>
+          <field name="price_base"/>
+          <field name="water_production" string="Water production More than" filter_domain="[('water_production', '>=', self)]"/>
+          <field name="energy_production"/>
+          <field name="metal_production"/>
+          <field name="wood_production"/>
+          <filter name="water_productors" string="Water productors" domain="[('water_production', '>', 0)]"/>
+          <filter name="energy_productors" string="Energy productors" domain="[('energy_production', '>', 0)]"/>
+          <filter name="group_by_colony" string="Group by Colony" context="{'group_by': 'colony'}"/>
+        </search>
+      </field>
+    </record>
+-->
+
+  </data>
+</odoo>

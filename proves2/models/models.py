@@ -10,6 +10,7 @@ class player(models.Model):
 
     def get_name(self): # tindre un def diferent en el proyecte
         first = ["Mad","Rig"]
+  #      first = list(string.ascii_lowercase)
         second = ["Garcia","Mantis"]
         print("************************GENERATED")
         return random.choice(first) + " "+ random.choice(second)
@@ -18,8 +19,9 @@ class player(models.Model):
     avatar = fields.image(max_width = 200, max_height=200)
     avatar_tuab = fields.image(related="avatar",max_width = 200, max_height=200)
     colonies = fields.One2many('expanse.colony', 'player')
+    spaceship = fields.Many2Many
     colonies_qty = fields.Integer(compute="get_colonies_qty") #quantitat de colonies
-
+#constrain nombre repetido
     @api.depends('colonies')
     def get_colonies_qty(self):
         print(self)
@@ -67,6 +69,38 @@ class spaceship(models.Model):
 
     name = fields.Char(required=True)
     colonies = fields.One2many('expanse.colony', 'planet')
+
+#colonies
+    def update_hanger(self):
+        for c in self:
+            required_money = 10++c.hanger_level
+            available_money = c.player.money
+            if(required_money <= available_money):
+                c.hanger_level == 1
+                c.player.money = c.player.money - required_money
+
+class battle(models.Model):
+    _name = 'expanse.battle'
+    _description = 'Battle'
+
+    name = fields.Char()
+    date_start = fields.Datetime()
+    date_end = fields.Datetime()
+    player1 = fields.Many2one('expanse.player')
+    player2 = fields.Many2one('expanse.player')
+
+# si cambie el juagdor, cambiara el nom al isntant, no esperar a guardar
+    @api.onchange('player1')
+    def onchange_player1(self):
+    self.name = self.player1.name
+    return{
+        'domain':{
+            'colony1':[('id', 'in', self.player1.colonies.ids)],
+            'player2':[('id', 'in', )]
+        }
+    }
+
+
 #     value2 = fields.Float(compute="_value_pc", store=True)
 #     description = fields.Text()
 #

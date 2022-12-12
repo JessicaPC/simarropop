@@ -1,0 +1,119 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+<!--
+    <record model="ir.ui.view" id="warcraft1.list">
+      <field name="name">warcraft1 list</field>
+      <field name="model">warcraft1.warcraft1</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="warcraft1.action_player_window">
+      <field name="name">warcraft1 player window</field>
+      <field name="res_model">warcraft1.player</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="warcraft1.action_bando_window">
+      <field name="name">warcraft1 bando window</field>
+      <field name="res_model">warcraft1.bando</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    
+    <record model="ir.actions.act_window" id="warcraft1.action_battle_window">
+      <field name="name">warcraft1 battle window</field>
+      <field name="res_model">warcraft1.battle</field>
+      <field name="view_mode">tree,form,calendar</field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="warcraft1.action_building_window">
+      <field name="name">warcraft1 building window</field>
+      <field name="res_model">warcraft1.building</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="warcraft1.action_building_type_window">
+      <field name="name">warcraft1 building_type window</field>
+      <field name="res_model">warcraft1.building_type</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="warcraft1.action_colony_window">
+      <field name="name">warcraft1 colony window</field>
+      <field name="res_model">warcraft1.colony</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+<!--
+    <record model="ir.actions.act_window" id="warcraft1.action_window">
+      <field name="name">warcraft1 window</field>
+      <field name="res_model">warcraft1.warcraft1</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="warcraft1.action_server">
+      <field name="name">warcraft1 server</field>
+      <field name="model_id" ref="model_warcraft1_warcraft1"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+    <menuitem name="warcraft1" id="warcraft1.menu_root"/>
+<!--
+    <menuitem name="warcraft1" id="warcraft1.menu_root"/>
+-->
+    <!-- menu categories -->
+    <menuitem name="Menu 1" id="warcraft1.menu_1" parent="warcraft1.menu_root"/>
+<!--
+    <menuitem name="Menu 1" id="warcraft1.menu_1" parent="warcraft1.menu_root"/>
+    <menuitem name="Menu 2" id="warcraft1.menu_2" parent="warcraft1.menu_root"/>
+-->
+    <!-- actions -->
+    <menuitem name="Jugadores" id="warcraft1.menu_players" parent="warcraft1.menu_1"
+              action="warcraft1.action_player_window"/>
+
+    <menuitem name="Bandos" id="warcraft1.menu_bandos" parent="warcraft1.menu_1"
+              action="warcraft1.action_bando_window"/>
+
+    <menuitem name="Batallas" id="warcraft1.menu_battles" parent="warcraft1.menu_1"
+              action="warcraft1.action_battle_window"/>
+
+    <menuitem name="Edificios" id="warcraft1.menu_buildings" parent="warcraft1.menu_1"
+              action="warcraft1.action_building_window"/>
+
+    <menuitem name="Tipo de Edificios" id="warcraft1.menu_buildings_type" parent="warcraft1.menu_1"
+              action="warcraft1.action_building_type_window"/>
+
+    <menuitem name="Colonias" id="warcraft1.menu_colonies" parent="warcraft1.menu_1"
+              action="warcraft1.action_colony_window"/>
+<!--
+    <menuitem name="List" id="warcraft1.menu_1_list" parent="warcraft1.menu_1"
+              action="warcraft1.action_window"/>
+    <menuitem name="Server to list" id="warcraft1" parent="warcraft1.menu_2"
+              action="warcraft1.action_server"/>
+-->
+  </data>
+</odoo>
