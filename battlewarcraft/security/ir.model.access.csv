@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_battlewarcraft_player,battlewarcraft.player,model_battlewarcraft_player,base.group_user,1,1,1,1
-access_battlewarcraft_bando,battlewarcraft.bando,model_battlewarcraft_bando,base.group_user,1,1,1,1
