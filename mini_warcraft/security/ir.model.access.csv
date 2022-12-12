@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mini_warcraft_player,mini_warcraft.player,model_mini_warcraft_player,base.group_user,1,1,1,1
-access_mini_warcraft_bando,mini_warcraft.bando,model_mini_warcraft_bando,base.group_user,1,1,1,1
