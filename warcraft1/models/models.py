@@ -9,18 +9,9 @@ class player(models.Model):
     _name = 'warcraft1.player'
     _description = 'Players of the game'
 
-    @api.constrains('name')
-    def get_name(self): 
-        palabra = ["user","usuario"]
-        numero = ["0","1", "2", "3", "4", "5", "6", "7", "8","9", "10", 
-            "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
+    
 
-         # No funciona aquesta linea  en ninguna altra funcio 
-        _sql_constraints = [('nombre_uniq','UNIQUE(name)','El nom no es por repetir')]
-
-        return random.choice(palabra) +  random.choice(numero)
-
-    name = fields.Char(string="Nombre", required=True, default=get_name)
+    name = fields.Char(string="Nombre", required=True)
     password = fields.Char(required=True)
     avatar = fields.Image(max_width = 100, max_height=100)
     avatar_mini = fields.Image(related="avatar", max_width=50, max_height=50)
@@ -38,6 +29,9 @@ class player(models.Model):
             return {'warning' : {'title':'Bad birth year','message': 'The Player is too young'}}
        
 
+    _sql_constraints = [('nombre_uniq','UNIQUE(name)','El nom no es por repetir')]
+ 
+    
 
 class bando(models.Model):
     _name = 'warcraft1.bando'
