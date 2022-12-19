@@ -1,5 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_warcraft1_player,warcraft1.player,model_warcraft1_player,base.group_user,1,1,1,1
 access_warcraft1_bando,warcraft1.bando,model_warcraft1_bando,base.group_user,1,1,1,1
 access_warcraft1_battle,warcraft1.battle,model_warcraft1_battle,base.group_user,1,1,1,1
 access_warcraft1_building,warcraft1.building,model_warcraft1_building,base.group_user,1,1,1,1

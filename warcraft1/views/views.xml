@@ -19,7 +19,7 @@
     <!-- actions opening views on models -->
     <record model="ir.actions.act_window" id="warcraft1.action_player_window">
       <field name="name">warcraft1 player window</field>
-      <field name="res_model">warcraft1.player</field>
+      <field name="res_model">res.partner</field>
       <field name="view_mode">tree,form,kanban</field>
     </record>
 

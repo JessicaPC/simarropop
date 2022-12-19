@@ -1,5 +1,8 @@
 <odoo>
     <data>
+    <record id="alianza" model="res.partner">
+      <field name="name">Caca</field>
+    </record>
 <!--  BANDOS -->
   <record id="alianza" model="warcraft1.bando">
             <field name="name">Allianza</field>
@@ -93,10 +96,10 @@
 
 
 <!--  JUGADORES -->
-     <record id="warcraft1.player_1" model="warcraft1.player">
+     <record id="warcraft1.player_demo1" model="res.partner">
             <field name="name">Player1</field>
             <field name="password">1234</field>
-             <field name="avatar">iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAANCnpUWHRSYXcgcHJvZmlsZSB0eXBl
+            <field name="avatar">iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAANCnpUWHRSYXcgcHJvZmlsZSB0eXBl
 IGV4aWYAAHjarZhpdhw5DoT/8xRzhCRIEORxuL43N5jjz4fMkmzJdrutbpWtLOXCBQhEBDLs//33
 hP/wk8xKyGq1tFIufnLLTTpf6vX89Pt3vPL9+/6Zb9fix/Ph/YJwKnFMz5+1vO5/Ox/fB3gOnW/6
 3UB1vi6Mjxdafo1fPw0kzyH5ivz7eg3UXgMleS7E1wD92dZVWrXvtzD2c3w9/4SB/8F/5fpx2T/8
@@ -312,12 +315,11 @@ KAghFIQQCkIIBSGEghBCQQihIIRQEEIIBSGEghBCQQh5qfw/bi9tfEBxBqUAAAAASUVORK5CYII=
                       <field name="bandoimg_mini"></field>
                       <field name="anyo_nacimiento">2000</field>
                       <field name="fecha_registro" eval="(datetime.now()+timedelta(-1)).strftime('%Y-%m-%d')"></field>
-
           </record>
 
 
           
-     <record id="warcraft1.player_2" model="warcraft1.player">
+     <record id="warcraft1.player_demo2" model="res.partner">
             <field name="name">Player2</field>
             <field name="password">1234</field>
             <field name="avatar">iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAANCnpUWHRSYXcgcHJvZmlsZSB0eXBl

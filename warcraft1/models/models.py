@@ -6,12 +6,11 @@ import random
 from datetime import datetime
 
 class player(models.Model):
-    _name = 'warcraft1.player'
+    _name = 'res.partner'
     _description = 'Players of the game'
+    _inherit='res.partner'
 
-    
-
-    name = fields.Char(string="Nombre", required=True)
+    #name = fields.Char(string="Nombre", required=True)
     password = fields.Char(required=True)
     avatar = fields.Image(max_width = 100, max_height=100)
     avatar_mini = fields.Image(related="avatar", max_width=50, max_height=50)
@@ -50,7 +49,7 @@ class colony(models.Model):
 
 
     name = fields.Char(required=True)
-    player = fields.Many2one('warcraft1.player', ondelete="cascade")
+    player = fields.Many2one('res.partner', ondelete="cascade")
     player_avatar = fields.Image(related="player.avatar", string="Player Avatar")
     money = fields.Float(related="player.money")
     buildings = fields.One2many('warcraft1.building', 'colony')
@@ -187,8 +186,8 @@ class battle(models.Model):
     name = fields.Char()
     date_start = fields.Datetime()
     date_end = fields.Datetime()
-    player1 = fields.Many2one('warcraft1.player')
-    player2 = fields.Many2one('warcraft1.player')
+    player1 = fields.Many2one('res.partner')
+    player2 = fields.Many2one('res.partner')
 #    type = fields.Many2one('warcraft1.building_type')
 
 
