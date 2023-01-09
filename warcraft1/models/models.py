@@ -21,6 +21,7 @@ class player(models.Model):
     fecha_registro = fields.Datetime(default=datetime.today())
     money = fields.Float(default=20.0)
     bandoname = fields.Char(related="bando.name")
+    is_player = fields.Boolean(default=True)
 
     @api.onchange('anyo_nacimiento')
     def _onchange_registro(self):
@@ -49,7 +50,7 @@ class colony(models.Model):
 
 
     name = fields.Char(required=True)
-    player = fields.Many2one('res.partner', ondelete="cascade")
+    player = fields.Many2one('res.partner', domain="[('is_player','=',True)]", ondelete="cascade")
     player_avatar = fields.Image(related="player.avatar", string="Player Avatar")
     money = fields.Float(related="player.money")
     buildings = fields.One2many('warcraft1.building', 'colony')
@@ -62,11 +63,14 @@ class colony(models.Model):
     metal = fields.Float()
     wood = fields.Float()
     food = fields.Float()
+    warrior = fields.Integer()
 
     water_production = fields.Float(compute='_get_total_productions')
     metal_production = fields.Float(compute='_get_total_productions')
     wood_production = fields.Float(compute='_get_total_productions')
     food_production = fields.Float(compute='_get_total_productions')
+    warrior_production = fields.Integer(compute='_get_total_productions')
+
 
     def _get_required_money_hall(self):
         for c in self:
@@ -77,7 +81,20 @@ class colony(models.Model):
         for c in self:
            c.buildings_available = self.env['warcraft1.building_type'].search([('bando', '=', c.player.bando.id), ('cost_structure','<=',c.money) ])
 
-   
+
+    @api.depends('buildings')
+    def _get_total_productions(self):
+        for c in self:
+            if len(c.buildings)>0:
+                c.water_production =  sum(c.buildings.mapped('water_production'))
+                c.metal_production = sum(c.buildings.mapped('metal_production'))
+                c.wood_production =  sum(c.buildings.mapped('wood_production'))
+                c.food_production =  sum(c.buildings.mapped('food_production'))
+                c.warrior_production =  sum(c.buildings.mapped('warrior_production'))
+    
+
+            else:
+                c.money = c.money
 
     # CRON (aumentar materiales)
     @api.model
@@ -87,25 +104,22 @@ class colony(models.Model):
 
     def produce_colony(self):
         for colony in self:
-            water = colony.water + 10
-            metal = colony.metal + 6
-            wood = colony.wood + 15
-            food = colony.food + 10
+            money = colony.money + 10
+            water = colony.water + colony.water_production
+            metal = colony.metal + colony.metal_production
+            wood = colony.wood + colony.wood_production
+            food = colony.food + colony.food_production
+            warrior = colony.warrior + colony.warrior_production
+        
 
             colony.write({
+                "money":money,
                 "water": water,
                 "metal": metal,
                 "wood": wood,
                 "food": food,
+                "warrior": warrior,
             })
-
-    @api.depends('buildings')
-    def _get_total_productions(self):
-        for c in self:
-            c.water_production =  sum(c.buildings.mapped('water_production'))
-            c.metal_production = sum(c.buildings.mapped('metal_production'))
-            c.wood_production =  sum(c.buildings.mapped('wood_production'))
-            c.food_production =  sum(c.buildings.mapped('food_production'))
 
 
 
@@ -125,6 +139,7 @@ class building(models.Model):
     metal_production = fields.Float(compute='_get_productions')
     wood_production = fields.Float(compute='_get_productions')
     food_production = fields.Float(compute='_get_productions')
+    warrior_production = fields.Integer(compute='_get_productions')
     stopped = fields.Boolean(compute='_get_productions')
 
     def _get_productions(self):
@@ -134,18 +149,21 @@ class building(models.Model):
             metal_production = b.type.metal_production * level
             wood_production = b.type.wood_production * level
             food_production = b.type.food_production * level
+            warrior_production = b.type.warrior_production * level
 
-            if water_production + b.colony.water >= 0 and metal_production + b.colony.metal >= 0 and wood_production + b.colony.wood >= 0 and food_production + b.colony.food >= 0:
+            if water_production + b.colony.water >= 0 and metal_production + b.colony.metal >= 0 and wood_production + b.colony.wood >= 0 and food_production + b.colony.food >= 0 and warrior_production + b.colony.warrior >= 0:
                 b.water_production = water_production
                 b.metal_production = metal_production
                 b.wood_production = wood_production
                 b.food_production = food_production
+                b.warrior_production = warrior_production
                 b.stopped = False
             else:
                 b.water_production = 0
                 b.metal_production = 0
                 b.wood_production = 0
                 b.food_production = 0
+                b.warrior_production = 0
                 b.stopped = True
 
 
@@ -163,6 +181,7 @@ class building_type(models.Model):
     metal_production = fields.Float()
     wood_production = fields.Float()
     food_production = fields.Float()
+    warrior_production = fields.Integer()
   
 
     def build(self):  

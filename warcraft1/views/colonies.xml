@@ -12,6 +12,7 @@
                 <field name="metal"/>
                 <field name="wood"/>
                 <field name="food"/>
+                
           
         </tree>
       </field>
@@ -38,6 +39,7 @@
                     <field name="metal"/>
                     <field name="wood"/>
                     <field name="food"/>
+                    <field name="warrior"/>
                 </group>
 
                 <notebook>
@@ -72,10 +74,11 @@
                                                                 <h4 class="o_kanban_record_title oe_partner_heading"><field name="name"/></h4></a>
                                                             <ul>
                                                                 <li>Price Base: <field name="cost_structure"/></li>
-                                                                <li>Water: <field name="water_production"/></li>
-                                                                <li>Metal: <field name="metal_production"/></li>
-                                                                <li>Wood: <field name="wood_production"/></li>
-                                                                <li>Food: <field name="food_production"/></li>
+                                                                <li>Water Production: <field name="water_production"/></li>
+                                                                <li>Metal Production: <field name="metal_production"/></li>
+                                                                <li>Wood Production: <field name="wood_production"/></li>
+                                                                <li>Food Production: <field name="food_production"/></li>
+                                                                <li>Warrior Production: <field name="warrior_production"/></li>
                                                             </ul>
                                                         </div>
                                                         <div class="oe_kanban_details d-flex flex-column">

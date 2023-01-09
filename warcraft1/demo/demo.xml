@@ -28,6 +28,7 @@
               <field name="metal_production">0</field>
               <field name="wood_production">0</field>
               <field name="food_production">0</field>
+              <field name="warrior_production">1</field>
              </record>
 
 
@@ -37,10 +38,12 @@
               <field name="bando" ref="alianza"></field>
               <field name="hp_structure">500</field>
               <field name="cost_structure">10</field>
-              <field name="water_production">0</field>
-              <field name="metal_production">0</field>
-              <field name="wood_production">0</field>
-              <field name="food_production">0</field>
+              <field name="water_production">5</field>
+              <field name="metal_production">5</field>
+              <field name="wood_production">5</field>
+              <field name="food_production">10</field>
+              <field name="warrior_production">0</field>
+
     </record>
 
 
@@ -54,6 +57,8 @@
               <field name="metal_production">0</field>
               <field name="wood_production">0</field>
               <field name="food_production">0</field>
+              <field name="warrior_production">2</field>
+
     </record>
 
   <!-- EDIFICIOS HORDA-->
@@ -67,6 +72,8 @@
               <field name="metal_production">0</field>
               <field name="wood_production">0</field>
               <field name="food_production">0</field>
+              <field name="warrior_production">1</field>
+
              </record>
   
 
@@ -76,10 +83,12 @@
               <field name="bando" ref="horda"></field>
               <field name="hp_structure">500</field>
               <field name="cost_structure">10</field>
-              <field name="water_production">0</field>
-              <field name="metal_production">0</field>
-              <field name="wood_production">0</field>
-              <field name="food_production">0</field>
+              <field name="water_production">5</field>
+              <field name="metal_production">5</field>
+              <field name="wood_production">5</field>
+              <field name="food_production">10</field>
+              <field name="warrior_production">0</field>
+
     </record>
 
     <record id="edificio3Horda" model="warcraft1.building_type">
@@ -92,6 +101,8 @@
               <field name="metal_production">0</field>
               <field name="wood_production">0</field>
               <field name="food_production">0</field>
+              <field name="warrior_production">2</field>
+
     </record>
 
 
@@ -315,6 +326,7 @@ KAghFIQQCkIIBSGEghBCQQihIIRQEEIIBSGEghBCQQh5qfw/bi9tfEBxBqUAAAAASUVORK5CYII=
                       <field name="bandoimg_mini"></field>
                       <field name="anyo_nacimiento">2000</field>
                       <field name="fecha_registro" eval="(datetime.now()+timedelta(-1)).strftime('%Y-%m-%d')"></field>
+                      <field name="is_player">True</field>
           </record>
 
 
@@ -537,6 +549,8 @@ KAghFIQQCkIIBSGEghBCQQihIIRQEEIIBSGEghBCQQh5qfw/bi9tfEBxBqUAAAAASUVORK5CYII=</fi
                       <field name="bandoimg_mini"></field>
                       <field name="anyo_nacimiento">2005</field>
                       <field name="fecha_registro" eval="(datetime.now()+timedelta(-1)).strftime('%Y-%m-%d')"></field>
+                      <field name="is_player">True</field>
+
           </record>
 
 

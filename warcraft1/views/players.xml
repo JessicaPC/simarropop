@@ -15,6 +15,7 @@
           <field name = "password" password="True" />
           <field name = "fecha_registro" />
           <field name = "bandoname" />
+          <field name = "is_player"/>
 
         </tree>
       </field>
@@ -35,6 +36,8 @@
                 <field name = "password" password="True" />
                 <field name = "fecha_registro" />
                 <field name = "bandoname" />
+                <field name = "is_player"/>
+
               </group>
             </page>
         </notebook>
@@ -56,7 +59,8 @@
                   <field name = "name" placeholder="Nombre Jugador" style="color:red;"/>
                   <field name = "avatar" widget="image"/>
                   <field name = "bando" widget="radio"/>
-                 
+                  <field name = "is_player"/>
+
                   </group>
             
 
@@ -141,5 +145,23 @@
     </record> 
 
 
+<!--  SEARCH  -->
+  <record model="ir.ui.view" id="warcraft1.player_search">
+      <field name="name">warcraft1 search</field>
+      <field name="model">res.partner</field>
+      <field name="priority" eval="17"/>
+      <field name="arch" type="xml">
+        <search >
+          <field name = "name"  />
+          <field name = "avatar_mini" widget="image"/>
+          <field name = "bandoimg_mini" widget="image" />
+          <field name = "password" password="True" />
+          <field name = "fecha_registro" />
+          <field name = "bandoname" />
+          <filter name="player_partner" string="Is Player" domain="[('is_player','=',True)]" />
+
+        </search>
+      </field>
+    </record>
   </data>
 </odoo>
