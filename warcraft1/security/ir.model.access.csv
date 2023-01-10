@@ -4,6 +4,7 @@ access_warcraft1_battle,warcraft1.battle,model_warcraft1_battle,base.group_user,
 access_warcraft1_building,warcraft1.building,model_warcraft1_building,base.group_user,1,1,1,1
 access_warcraft1_building_type,warcraft1.building_type,model_warcraft1_building_type,base.group_user,1,1,1,1
 access_warcraft1_colony,warcraft1.colony,model_warcraft1_colony,base.group_user,1,1,1,1
+access_warcraft1_player_wizard,warcraft1.player_wizard,model_warcraft1_player_wizard,base.group_user,1,1,1,1
 
 
 

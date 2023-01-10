@@ -19,7 +19,6 @@ class player(models.Model):
     bandoimg_mini = fields.Image(related="bandoimg", max_width = 100, max_height=100)
     anyo_nacimiento = fields.Integer(required=True)
     fecha_registro = fields.Datetime(default=datetime.today())
-    money = fields.Float(default=20.0)
     bandoname = fields.Char(related="bando.name")
     is_player = fields.Boolean(default=True)
 
@@ -52,7 +51,7 @@ class colony(models.Model):
     name = fields.Char(required=True)
     player = fields.Many2one('res.partner', domain="[('is_player','=',True)]", ondelete="cascade")
     player_avatar = fields.Image(related="player.avatar", string="Player Avatar")
-    money = fields.Float(related="player.money")
+    money = fields.Float(default=100.0)
     buildings = fields.One2many('warcraft1.building', 'colony')
     buildings_available = fields.Many2many('warcraft1.building_type',compute='_get_available_buildings')
     hall_level = fields.Integer(default=0)
@@ -65,6 +64,7 @@ class colony(models.Model):
     food = fields.Float()
     warrior = fields.Integer()
 
+    money_production = fields.Float(compute='_get_total_productions')
     water_production = fields.Float(compute='_get_total_productions')
     metal_production = fields.Float(compute='_get_total_productions')
     wood_production = fields.Float(compute='_get_total_productions')
@@ -86,12 +86,13 @@ class colony(models.Model):
     def _get_total_productions(self):
         for c in self:
             if len(c.buildings)>0:
+                c.money_production =  sum(c.buildings.mapped('money_production'))
                 c.water_production =  sum(c.buildings.mapped('water_production'))
                 c.metal_production = sum(c.buildings.mapped('metal_production'))
                 c.wood_production =  sum(c.buildings.mapped('wood_production'))
                 c.food_production =  sum(c.buildings.mapped('food_production'))
                 c.warrior_production =  sum(c.buildings.mapped('warrior_production'))
-    
+                
 
             else:
                 c.money = c.money
@@ -104,7 +105,7 @@ class colony(models.Model):
 
     def produce_colony(self):
         for colony in self:
-            money = colony.money + 10
+            money = colony.money + colony.money_production
             water = colony.water + colony.water_production
             metal = colony.metal + colony.metal_production
             wood = colony.wood + colony.wood_production
@@ -135,6 +136,7 @@ class building(models.Model):
     type = fields.Many2one('warcraft1.building_type', ondelete="restrict")
     level = fields.Integer(default=1)
     experience = fields.Integer(default=0)
+    money_production = fields.Float(compute='_get_productions')
     water_production = fields.Float(compute='_get_productions')
     metal_production = fields.Float(compute='_get_productions')
     wood_production = fields.Float(compute='_get_productions')
@@ -145,13 +147,15 @@ class building(models.Model):
     def _get_productions(self):
         for b in self:
             level = b.level
+            money_production = b.type.money_production * level
             water_production = b.type.water_production * level
             metal_production = b.type.metal_production * level
             wood_production = b.type.wood_production * level
             food_production = b.type.food_production * level
             warrior_production = b.type.warrior_production * level
 
-            if water_production + b.colony.water >= 0 and metal_production + b.colony.metal >= 0 and wood_production + b.colony.wood >= 0 and food_production + b.colony.food >= 0 and warrior_production + b.colony.warrior >= 0:
+            if money_production + b.colony.money >= 0 and water_production + b.colony.water >= 0 and metal_production + b.colony.metal >= 0 and wood_production + b.colony.wood >= 0 and food_production + b.colony.food >= 0 and warrior_production + b.colony.warrior >= 0:
+                b.money_production = money_production
                 b.water_production = water_production
                 b.metal_production = metal_production
                 b.wood_production = wood_production
@@ -159,6 +163,7 @@ class building(models.Model):
                 b.warrior_production = warrior_production
                 b.stopped = False
             else:
+                money_production = 0
                 b.water_production = 0
                 b.metal_production = 0
                 b.wood_production = 0
@@ -177,6 +182,7 @@ class building_type(models.Model):
     hp_structure = fields.Float()
     cost_structure = fields.Integer()
 
+    money_production = fields.Float()
     water_production = fields.Float()
     metal_production = fields.Float()
     wood_production = fields.Float()
@@ -209,7 +215,26 @@ class battle(models.Model):
     player2 = fields.Many2one('res.partner')
 #    type = fields.Many2one('warcraft1.building_type')
 
+# model que pot ser, siga borrat
+class player_wizard(models.TransientModel):
+    _name = 'warcraft1.player_wizard'
+    _description = 'Wizard create  new Clients Players'
 
+    # El context conté, entre altre coses,
+    # el active_id del model que està obert.
+    def _default_client(self):
+         return self.env['res.partner'].browse(self._context.get('active_id')) 
+
+    name = fields.Many2one('res.partner', default=_default_client)
+    password = fields.Char(required = True)
+    avatar = fields.Image(max_width = 100, max_height=100)
+
+    def create_player(self):
+        self.ensure_one()
+        self.name.write({"password":self.password,
+                        "avatar":self.avatar,
+                        "is_player":True,
+                        })
 
 # class warcraft1(models.Model):
 #     _name = 'warcraft1.warcraft1'

@@ -2,6 +2,52 @@
       <odoo>
     <data>
 
+
+
+<!-- WIZARD FORM -->
+  <record model="ir.ui.view" id="warcraft1.player_wizard_form">
+      <field name="name">warcraft1 player wizard</field>
+      <field name="model">warcraft1.player_wizard</field>
+      <field name="arch" type="xml">
+        <form string="Battle wizard warcraft form">
+     
+          <sheet>
+                <group>
+                  <field name = "name" placeholder="Nombre Jugador" style="color:red;"/>
+                  <field name = "avatar" widget="image"/>
+                </group>
+            
+
+           <notebook>
+            <page>
+                  <group>
+                     <field name = "password" placeholder="Escribe una contraseña" />  
+                  </group>
+
+                  <footer>
+                        <button name="create_player" type="object"
+                                string="Create" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                  </footer>
+
+              </page>
+            </notebook>
+          </sheet>
+   
+        </form>
+      </field>
+    </record> 
+
+<!-- ACTION -->
+ <record id="warcraft1.player_wizard_action" model="ir.actions.act_window">
+            <field name="name">Create Player</field>
+            <field name="res_model">warcraft1.player_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="base.model_res_partner"/>
+</record> 
+
+
   <!-- explicit list view definition -->
 
    <record model="ir.ui.view" id="warcraft1.playertree">
@@ -36,6 +82,7 @@
                 <field name = "password" password="True" />
                 <field name = "fecha_registro" />
                 <field name = "bandoname" />
+                <button name="%(warcraft1.player_wizard_action)d" type="action" string="Create Player" class="oe_highlight" />
                 <field name = "is_player"/>
 
               </group>
@@ -145,6 +192,8 @@
     </record> 
 
 
+
+
 <!--  SEARCH  -->
   <record model="ir.ui.view" id="warcraft1.player_search">
       <field name="name">warcraft1 search</field>
@@ -163,5 +212,6 @@
         </search>
       </field>
     </record>
+
   </data>
 </odoo>

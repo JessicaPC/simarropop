@@ -79,6 +79,7 @@
                                                                 <li>Wood Production: <field name="wood_production"/></li>
                                                                 <li>Food Production: <field name="food_production"/></li>
                                                                 <li>Warrior Production: <field name="warrior_production"/></li>
+                                                                <li>Money Production: <field name="money_production"/></li>
                                                             </ul>
                                                         </div>
                                                         <div class="oe_kanban_details d-flex flex-column">

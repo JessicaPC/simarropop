@@ -24,6 +24,7 @@
               <field name="bando" ref="alianza"></field>
               <field name="hp_structure">1500</field>
               <field name="cost_structure">50</field>
+              <field name="money_production">10</field>
               <field name="water_production">0</field>
               <field name="metal_production">0</field>
               <field name="wood_production">0</field>
@@ -38,6 +39,7 @@
               <field name="bando" ref="alianza"></field>
               <field name="hp_structure">500</field>
               <field name="cost_structure">10</field>
+              <field name="money_production">0</field>
               <field name="water_production">5</field>
               <field name="metal_production">5</field>
               <field name="wood_production">5</field>
@@ -53,6 +55,7 @@
               <field name="bando" ref="alianza"></field>
               <field name="hp_structure">2000</field>
               <field name="cost_structure">45</field>
+              <field name="money_production">0</field>
               <field name="water_production">0</field>
               <field name="metal_production">0</field>
               <field name="wood_production">0</field>
@@ -68,6 +71,7 @@
               <field name="bando" ref="horda"></field>
               <field name="hp_structure">1500</field>
               <field name="cost_structure">50</field>
+              <field name="money_production">10</field>
               <field name="water_production">0</field>
               <field name="metal_production">0</field>
               <field name="wood_production">0</field>
@@ -83,6 +87,7 @@
               <field name="bando" ref="horda"></field>
               <field name="hp_structure">500</field>
               <field name="cost_structure">10</field>
+              <field name="money_production">0</field>
               <field name="water_production">5</field>
               <field name="metal_production">5</field>
               <field name="wood_production">5</field>
@@ -97,6 +102,7 @@
               <field name="bando" ref="horda"></field>
               <field name="hp_structure">2000</field>
               <field name="cost_structure">45</field>
+              <field name="money_production">0</field>
               <field name="water_production">0</field>
               <field name="metal_production">0</field>
               <field name="wood_production">0</field>
