@@ -82,7 +82,10 @@
                 <field name = "password" password="True" />
                 <field name = "fecha_registro" />
                 <field name = "bandoname" />
-                <button name="%(warcraft1.player_wizard_action)d" type="action" string="Create Player" class="oe_highlight" />
+                <!-- el servidor busca el external id en la base de dades (recomanat si es crida varies vegades)-->
+                  <button name="%(warcraft1.player_wizard_action)d" type="action" string="Create Player" class="oe_highlight" />
+                <!-- Cridar desde python, li diu quin action vol fer al servidor-->
+                  <button name="launch_player_wizard" type="object" string="Create Player" class="oe_highlight" />
                 <field name = "is_player"/>
 
               </group>

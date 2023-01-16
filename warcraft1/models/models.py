@@ -22,15 +22,24 @@ class player(models.Model):
     bandoname = fields.Char(related="bando.name")
     is_player = fields.Boolean(default=True)
 
+
     @api.onchange('anyo_nacimiento')
     def _onchange_registro(self):
         if self.anyo_nacimiento > 2015:
             return {'warning' : {'title':'Bad birth year','message': 'The Player is too young'}}
-       
-
+      
     _sql_constraints = [('nombre_uniq','UNIQUE(name)','El nom no es por repetir')]
- 
-    
+
+
+     #llança un action  
+    def launch_player_wizard(self):
+        return {
+            'name': 'Create Player',
+            'type':'ir.actions.act_window',
+            'res_model':'warcraft1.player_wizard',
+            'view_mode':'form',
+            'target':'new',
+        }
 
 class bando(models.Model):
     _name = 'warcraft1.bando'
@@ -215,6 +224,7 @@ class battle(models.Model):
     player2 = fields.Many2one('res.partner')
 #    type = fields.Many2one('warcraft1.building_type')
 
+
 # model que pot ser, siga borrat
 class player_wizard(models.TransientModel):
     _name = 'warcraft1.player_wizard'
@@ -228,6 +238,7 @@ class player_wizard(models.TransientModel):
     name = fields.Many2one('res.partner', default=_default_client)
     password = fields.Char(required = True)
     avatar = fields.Image(max_width = 100, max_height=100)
+    anyo_nacimiento = fields.Integer(required=True)
 
     def create_player(self):
         self.ensure_one()
@@ -235,6 +246,19 @@ class player_wizard(models.TransientModel):
                         "avatar":self.avatar,
                         "is_player":True,
                         })
+
+                        
+
+
+class battle_wizard(models.TransientModel):
+    _name = 'warcraft1.battle'
+    _description = 'Battle'
+
+    name = fields.Char()
+    date_start = fields.Datetime()
+    date_end = fields.Datetime()
+    player1 = fields.Many2one('res.partner')
+    player2 = fields.Many2one('res.partner')
 
 # class warcraft1(models.Model):
 #     _name = 'warcraft1.warcraft1'
