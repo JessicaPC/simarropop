@@ -1,0 +1,58 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="simarropop_tree">
+      <field name="name">simarropop tree</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="simarropop.usuarios_window">
+      <field name="name">simarropop usuarios</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="simarropop.action_server">
+      <field name="name">simarropop server</field>
+      <field name="model_id" ref="model_simarropop_simarropop"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+
+    <menuitem name="simarropop" id="simarropop.menu_root"/>
+
+    <!-- menu categories -->
+    <menuitem name="Simarropop Menu" id="simarropop.menu_1" parent="simarropop.menu_root"/>
+     <!--<menuitem name="Menu 1" id="simarropop.menu_1" parent="simarropop.menu_root"/>
+    -->
+    <!-- actions -->
+
+    <menuitem name="Usuarios" id="simarropop.menu_1_list" parent="simarropop.menu_1"
+              action="simarropop.usuarios_window"/>
+<!--
+    <menuitem name="Server to list" id="simarropop" parent="simarropop.menu_2"
+              action="simarropop.action_server"/>
+-->
+  </data>
+</odoo>

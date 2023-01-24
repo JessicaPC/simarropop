@@ -1,8 +1,6 @@
 <odoo>
     <data>
-    <record id="alianza" model="res.partner">
-      <field name="name">Caca</field>
-    </record>
+  
 <!--  BANDOS -->
   <record id="alianza" model="warcraft1.bando">
             <field name="name">Allianza</field>
