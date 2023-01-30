@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="simarropop_usuarios_tree">
+      <field name="name">simarropop usuarios tree</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+  </data>
+</odoo>

@@ -25,6 +25,12 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/modelos/usuarios.xml',
+        'views/modelos/articulos.xml',
+        'views/modelos/mensajes.xml',
+        'views/modelos/categorias.xml',
+        'views/modelos/fotos.xml',
+        'views/modelos/valoraciones.xml',
         'views/views.xml',
         'views/templates.xml',
     ],
