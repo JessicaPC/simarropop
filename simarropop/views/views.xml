@@ -20,6 +20,14 @@
       <field name="name">simarropop usuarios</field>
       <field name="res_model">res.partner</field>
       <field name="view_mode">tree,form</field>
+      <field name="domain"></field>
+      <field name="context">{'default_is_user': True}</field>
+      <field name="search_view_id" ref="simarropop.user_search"></field>
+      <!--
+      <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('simarropop_usuarios_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('simarropop.usuarios_form')}),]" />
+            -->
     </record>
 
     <record model="ir.actions.act_window" id="simarropop.articulos_window">

@@ -1,16 +1,73 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
-
+<!-- TREE -->
     <record model="ir.ui.view" id="simarropop_usuarios_tree">
       <field name="name">simarropop usuarios tree</field>
       <field name="model">res.partner</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
+          <field name="articulos"/>
+          <field name="valoraciones"/>
+          <field name="mensajes"/>
+          <field name="fecha_nacimiento"/>
+          <field name="contrasenya" password="True"/>
+          <field name="is_user"/>
         </tree>
       </field>
     </record>
+
+
+    <!-- FORM
+    <record model="ir.ui.view" id="simarropop.usuarios_form">
+      <field name="name">simarropop form list</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+        <form string="Usuarios form">
+     
+          <sheet>
+                <group>
+                  <field name = "name" placeholder="Nombre Usuario" style="color:red;"/>
+                  <field name = "avatar" widget="image"/>
+                  <field name = "bando" widget="radio"/>
+                  <field name = "is_player"/>
+
+                  </group>
+            
+
+           <notebook>
+            <page>
+                  <group>
+                    <field name = "fecha_nacimiento" />
+                     <field name = "contrasenya" placeholder="Escribe una contraseña" />  
+                               
+                  </group>
+              </page>
+            </notebook>
+          </sheet>
+   
+        </form>
+      </field>
+    </record> 
+
+-->
+
+
+<!--  SEARCH  -->
+  <record model="ir.ui.view" id="simarropop.user_search">
+      <field name="name">simarropop search</field>
+      <field name="model">res.partner</field>
+      <field name="priority" eval="17"/>
+      <field name="arch" type="xml">
+        <search >
+          <field name = "name"  />
+       
+
+        </search>
+      </field>
+    </record>
+
 
   </data>
 </odoo>

@@ -9,6 +9,13 @@ class usuario(models.Model):
     _inherit = 'res.partner'
 
     #name = fields.Char()
+    articulos = fields.One2many("simarropop.articulo", "usuario")
+    valoraciones = fields.One2many("simarropop.valoracion", "usuario")
+    mensajes = fields.One2many("simarropop.mensaje", "usuario")
+    fecha_nacimiento =  fields.Datetime()
+    contrasenya = fields.Char(required=True)
+    is_user = fields.Boolean()
+
 # ---------------------------------------------------------------------
 class articulo(models.Model):
     _name = 'simarropop.articulo'
@@ -16,7 +23,12 @@ class articulo(models.Model):
     
 
     name = fields.Char()
-
+    usuario = fields.Many2one("res.partner")
+    categoria = fields.Many2one("simarropop.categoria")
+    fotos = fields.Many2one("simarropop.foto")
+    precio = fields.Float()
+    descripcion = fields.Char()
+    
 # ---------------------------------------------------------------------
 
 class mensaje(models.Model):
@@ -25,6 +37,8 @@ class mensaje(models.Model):
     
 
     name = fields.Char()
+    usuario = fields.Many2one("res.partner")
+    contenido = fields.Char()
 
 # ---------------------------------------------------------------------
 
@@ -34,15 +48,18 @@ class categoria(models.Model):
     
 
     name = fields.Char()
+    articulo = fields.One2many("simarropop.articulo", "categoria")
 
 # ---------------------------------------------------------------------
 
 class foto(models.Model):
     _name = 'simarropop.foto'
     _description = 'Fotos de la App'
-    
 
     name = fields.Char()
+    articulo = fields.One2many("simarropop.articulo","fotos")
+    foto_articulo = fields.Image()
+    
 
 # ---------------------------------------------------------------------
 
@@ -52,7 +69,9 @@ class valoracion(models.Model):
     
 
     name = fields.Char()
-
+    usuario = fields.Many2one("res.partner")
+    opinion = fields.Char()
+    puntuacion = fields.Float()
 # ---------------------------------------------------------------------
 
 
