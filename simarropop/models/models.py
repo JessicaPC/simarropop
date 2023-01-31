@@ -25,7 +25,7 @@ class articulo(models.Model):
     name = fields.Char()
     usuario = fields.Many2one("res.partner")
     categoria = fields.Many2one("simarropop.categoria")
-    fotos = fields.Many2one("simarropop.foto")
+    fotos = fields.One2many("simarropop.foto", "articulo")
     fotos_img = fields.Image(related = "fotos.foto_articulo")
     fotos_img_ruta = fields.Char()
     precio = fields.Float()
@@ -60,7 +60,7 @@ class foto(models.Model):
     _description = 'Fotos de la App'
 
     name = fields.Char()
-    articulo = fields.One2many("simarropop.articulo","fotos")
+    articulo = fields.Many2one("simarropop.articulo")
     foto_articulo = fields.Image()
     fotos_articulo_ruta = fields.Char()
     
