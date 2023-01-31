@@ -1,25 +1,32 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
-<!-- TREE -->
+<!-- TREE datos vista desde fuera -->
     <record model="ir.ui.view" id="simarropop_usuarios_tree">
       <field name="name">simarropop usuarios tree</field>
       <field name="model">res.partner</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
-          <field name="articulos"/>
-          <field name="valoraciones"/>
-          <field name="mensajes"/>
-          <field name="fecha_nacimiento"/>
-          <field name="contrasenya" password="True"/>
+          <field name="email"/>
           <field name="is_user"/>
         </tree>
       </field>
     </record>
 
+<!-- HERENCIA  -->
+    <record model="ir.ui.view" id="simarropop_usuarios_partner_form">
+      <field name="name">simarropop usuarios partner tree</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+          <field name="name"/>
+   
+       
+      </field>
+    </record>
 
-    <!-- FORM
+    <!-- FORM usuarios, datos formulario-->
     <record model="ir.ui.view" id="simarropop.usuarios_form">
       <field name="name">simarropop form list</field>
       <field name="model">res.partner</field>
@@ -28,12 +35,17 @@
      
           <sheet>
                 <group>
-                  <field name = "name" placeholder="Nombre Usuario" style="color:red;"/>
-                  <field name = "avatar" widget="image"/>
-                  <field name = "bando" widget="radio"/>
-                  <field name = "is_player"/>
-
-                  </group>
+                    <field name="name"/>
+                    <field name="avatar_128" widget="image"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="city"/>
+                    <field name="articulos"/>
+                    <field name="valoraciones"/>
+                    <field name="mensajes"/>
+                    <field name="fecha_nacimiento"/>
+                  <field name = "is_user"/>
+                </group>
             
 
            <notebook>
@@ -51,22 +63,69 @@
       </field>
     </record> 
 
--->
 
 
-<!--  SEARCH  -->
-  <record model="ir.ui.view" id="simarropop.user_search">
-      <field name="name">simarropop search</field>
+<!--  SEARCH usuarios  -->
+    <record model="ir.ui.view" id="simarropop_usuarios_search">
+      <field name="name">simarropop usuarios search</field>
       <field name="model">res.partner</field>
-      <field name="priority" eval="17"/>
       <field name="arch" type="xml">
-        <search >
-          <field name = "name"  />
-       
-
+        <search>
+        <!-- Criteris de Busqueda-->
+          <field name="name"/>
+          <field name="email"/>
+          <field name="is_user"/>
+          <!-- prueba filtro
+          <filter name="emailJ" string="Nombre por J" domain="[('email','ilike','j%')]"/>
+          -->
+          <!-- Filtro Buscar si es usuario-->
+           <filter name="Usuarios" string="Buscar los que son Usuarios" domain="[('is_user','=',True)]"/>
         </search>
       </field>
     </record>
+
+<!-- KANBAN -->
+    <record model="ir.ui.view" id="simarropop.kanbanview">
+        	<field name="name">simarropop kanban view</field>
+        	<field name="model">res.partner</field>
+        	<field name="arch" type="xml">
+            	<kanban>
+            	<!-- Estos fields se cargan inicialmente y pueden ser utilizados
+            	por la lógica del Kanban -->
+                	<field name="name" />
+                	<field name="id" /> <!-- Es importante añadir el id para el
+                	record.id.value posterior -->
+                	<field name="avatar_128" />
+                	<templates>
+                    	<t t-name="kanban-box">
+                        	<div class="oe_product_vignette"> 
+                           <!-- Aprovechando un CSS de products -->
+                            	<a type="open">
+                                	<img class="o_image_64_contain"
+                                     	t-att-alt="record.name.value"
+                                     	t-att-src="kanban_image('res.partner', 'avatar_128', record.id.raw_value)" />
+                            	</a>
+                    <!-- Para obtener la imagen necesitamos una función javascript 
+                         que proporciona Odoo Llamada kanban-image y esta necesita 
+                         el nombre del modelo, el field y el id para encontrarla -->
+                   <!-- record es una variable que tiene QWeb para acceder a las 
+                        propiedades del registro que estamos mostrando. Las propiedades
+                        accesibles son las que hemos puesto en los fields de arriba. -->
+                            	<div class="oe_product_desc">
+                                	<h4>
+                                    <a type="edit"> <!-- Abre un formulario de edición -->
+                                        	  <field name="id"></field>
+                                        	  <field name="name"></field>
+                                          
+                                    </a>
+                                	</h4>
+                            	</div>
+                        	</div>
+                    	</t>
+                	</templates>
+            	</kanban>
+        	</field>
+    	</record>
 
 
   </data>

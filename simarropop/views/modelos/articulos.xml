@@ -8,9 +8,38 @@
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
+         <field name="fotos_img" widget="image"/>
         </tree>
       </field>
     </record>
 
+   <record model="ir.ui.view" id="simarropop_articulos_form">
+      <field name="name">simarropop articulos form</field>
+      <field name="model">simarropop.articulo</field>
+      <field name="arch" type="xml">
+        <form string="Articulos">
+          <field name="name"/>
+         <field name="fotos_img" widget="image"/>
+        </form>
+      </field>
+    </record>
+   
+
+ 
+  
+<!-- SEARCH articulos   -->
+    <record model="ir.ui.view" id="simarropop_articulos_search">
+      <field name="name">simarropop articulos search</field>
+      <field name="model">simarropop.articulo</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+          <field name = "categoria" />
+          <field name = "precio"/>  
+          <field name = "distancia"/>  
+        </search>
+      </field>
+    </record>
+  
   </data>
 </odoo>
