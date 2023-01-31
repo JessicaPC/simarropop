@@ -19,7 +19,7 @@
       <field name="arch" type="xml">
         <form string="Articulos">
           <field name="name"/>
-         <field name="fotos_img" widget="image"/>
+         <field name="fotos"/>
         </form>
       </field>
     </record>
