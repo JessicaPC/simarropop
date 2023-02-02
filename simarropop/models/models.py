@@ -29,8 +29,8 @@ class articulo(models.Model):
     fotos_img = fields.Image(related = "fotos.foto_articulo")
     fotos_img_ruta = fields.Char()
     precio = fields.Float()
-    distancia = fields.Float()
     descripcion = fields.Char()
+    ubicacion = fields.Char()
     
 # ---------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ class categoria(models.Model):
 
     name = fields.Char()
     articulo = fields.One2many("simarropop.articulo", "categoria")
-
+    descripcion_categoria = fields.Char()
 # ---------------------------------------------------------------------
 
 class foto(models.Model):

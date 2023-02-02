@@ -2,6 +2,7 @@
   <data>
     <!-- explicit list view definition -->
 
+<!-- Vista Tree articulos-->
     <record model="ir.ui.view" id="simarropop_articulos_tree">
       <field name="name">simarropop articulos tree</field>
       <field name="model">simarropop.articulo</field>
@@ -13,17 +14,27 @@
       </field>
     </record>
 
+<!-- Vista Form articulos  -->
    <record model="ir.ui.view" id="simarropop_articulos_form">
       <field name="name">simarropop articulos form</field>
       <field name="model">simarropop.articulo</field>
       <field name="arch" type="xml">
         <form string="Articulos">
-          <field name="name"/>
-         <field name="fotos"/>
+        <group>
+            <field name="usuario"/>
+            <field name="categoria"/>
+            <field name="name"/>
+            <field name="descripcion"/>
+
+            <field name="fotos"/>
+            <field name="precio"/>
+            <field name="ubicacion"/>
+            </group>
         </form>
       </field>
     </record>
    
+ 
 
  
   
@@ -36,7 +47,7 @@
           <field name="name"/>
           <field name = "categoria" />
           <field name = "precio"/>  
-          <field name = "distancia"/>  
+          <field name = "ubicacion"/>  
         </search>
       </field>
     </record>

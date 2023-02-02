@@ -1,7 +1,7 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
-
+<!-- Vista tree fotos-->
     <record model="ir.ui.view" id="simarropop_fotos_tree">
       <field name="name">simarropop fotos tree</field>
       <field name="model">simarropop.foto</field>
@@ -10,6 +10,21 @@
           <field name="name"/>
           <field name="foto_articulo" widget="image"/>
         </tree>
+      </field>
+    </record>
+
+    <!-- Vista tree form -->
+
+    <record model="ir.ui.view" id="simarropop_fotos_form">
+      <field name="name">simarropop fotos form</field>
+      <field name="model">simarropop.foto</field>
+      <field name="arch" type="xml">
+        <form>
+        <group>
+            <field name="name"/>
+            <field name="foto_articulo" widget="image"/>
+          </group>
+        </form>
       </field>
     </record>
 
