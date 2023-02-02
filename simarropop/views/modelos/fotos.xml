@@ -8,7 +8,7 @@
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
-          <field name="foto_articulo" widget="image"/>
+          <field name="foto_articulo" widget="image" />
         </tree>
       </field>
     </record>
@@ -22,7 +22,7 @@
         <form>
         <group>
             <field name="name"/>
-            <field name="foto_articulo" widget="image"/>
+            <field name="foto_articulo"/>
           </group>
         </form>
       </field>
