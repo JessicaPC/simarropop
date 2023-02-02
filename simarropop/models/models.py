@@ -55,6 +55,7 @@ class categoria(models.Model):
     descripcion_categoria = fields.Char()
     categoria_img = fields.Image()
     minicategoria_img = fields.Image(related="categoria_img", max_width = 100, max_height=100)
+    
 # ---------------------------------------------------------------------
 
 class foto(models.Model):
