@@ -34,9 +34,6 @@
       </field>
     </record>
    
- 
-
- 
   
 <!-- SEARCH articulos   -->
     <record model="ir.ui.view" id="simarropop_articulos_search">
@@ -48,6 +45,7 @@
           <field name = "categoria" />
           <field name = "precio"/>  
           <field name = "ubicacion"/>  
+     
         </search>
       </field>
     </record>

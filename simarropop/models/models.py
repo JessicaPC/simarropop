@@ -16,6 +16,8 @@ class usuario(models.Model):
     contrasenya = fields.Char(required=True)
     is_user = fields.Boolean()
 
+    
+
 # ---------------------------------------------------------------------
 class articulo(models.Model):
     _name = 'simarropop.articulo'
@@ -26,7 +28,7 @@ class articulo(models.Model):
     usuario = fields.Many2one("res.partner")
     categoria = fields.Many2one("simarropop.categoria")
     fotos = fields.One2many("simarropop.foto", "articulo")
-    fotos_img = fields.Image(related = "fotos.foto_articulo") # si se borra el articulo, se borran sus fotos
+    fotos_img = fields.Image(related = "fotos.foto_articulo") 
     fotos_img_ruta = fields.Char()
     precio = fields.Float()
     descripcion = fields.Char()
@@ -54,7 +56,7 @@ class categoria(models.Model):
     articulo = fields.One2many("simarropop.articulo", "categoria")
     descripcion_categoria = fields.Char()
     categoria_img = fields.Image()
-    minicategoria_img = fields.Image(related="categoria_img", max_width = 100, max_height=100)
+   
     
 # ---------------------------------------------------------------------
 
@@ -63,7 +65,7 @@ class foto(models.Model):
     _description = 'Fotos de la App'
 
     name = fields.Char()
-    articulo = fields.Many2one("simarropop.articulo", ondelete="cascade")
+    articulo = fields.Many2one("simarropop.articulo", ondelete="cascade")# si se borra el articulo, se borran sus fotos
     foto_articulo = fields.Image()
     fotos_articulo_ruta = fields.Char()
     

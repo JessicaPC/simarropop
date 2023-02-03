@@ -79,7 +79,7 @@
           <filter name="emailJ" string="Nombre por J" domain="[('email','ilike','j%')]"/>
           -->
           <!-- Filtro Buscar si es usuario-->
-           <filter name="Usuarios" string="Buscar los que son Usuarios" domain="[('is_user','=',True)]"/>
+           <filter name="Usuarios" string="Is USER" domain="[('is_user','=',True)]"/>
         </search>
       </field>
     </record>
