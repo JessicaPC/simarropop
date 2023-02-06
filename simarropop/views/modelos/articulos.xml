@@ -24,6 +24,8 @@
             <field name="usuario" domain="[('is_user','=',True)]"/>
             <field name="categoria"/>
             <field name="name"/>
+            <field name="comprador_nombre"/>
+            <field name="vendedor_nombre"/>
             <field name="descripcion"/>
 
             <field name="fotos"/>

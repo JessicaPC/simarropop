@@ -35,6 +35,10 @@ class articulo(models.Model):
     precio = fields.Float()
     descripcion = fields.Char()
     ubicacion = fields.Char()
+    comprador_nombre = fields.Char()
+    vendedor_nombre = fields.Char()
+    
+
     
 # ---------------------------------------------------------------------
 
@@ -91,9 +95,9 @@ class venta(models.Model):
     _inherit = 'sale.order'
 
     #name = fields.Char()
-    nombre_cliente = fields.Char()
-    fecha_pedido = fields.Datetime()
-    
+    articulo_nombre = fields.Char()
+    usuario_nombre = fields.Char()
+    accion_nombre = fields.Char()
 
     
 
