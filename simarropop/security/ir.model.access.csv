@@ -5,3 +5,4 @@ access_simarropop_categoria,simarropop.categoria,model_simarropop_categoria,base
 access_simarropop_foto,simarropop.foto,model_simarropop_foto,base.group_user,1,1,1,1
 access_simarropop_valoracion,simarropop.valoracion,model_simarropop_valoracion,base.group_user,1,1,1,1
 
+

@@ -21,7 +21,7 @@
       <field name="arch" type="xml">
         <form string="Articulos">
         <group>
-            <field name="usuario"/>
+            <field name="usuario" domain="[('is_user','=',True)]"/>
             <field name="categoria"/>
             <field name="name"/>
             <field name="descripcion"/>

@@ -61,6 +61,12 @@
       <field name="view_mode">tree,form</field>
     </record>
 
+    <record model="ir.actions.act_window" id="simarropop.ventas_window">
+      <field name="name">simarropop ventas</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
 
     <!-- server action to the one above -->
 <!--
@@ -105,6 +111,9 @@
 
     <menuitem name="Valoraciones" id="simarropop.menu_valoraciones_list" parent="simarropop.menu_1"
               action="simarropop.valoraciones_window"/>
+
+    <menuitem name="Ventas" id="simarropop.menu_ventas_list" parent="simarropop.menu_1"
+              action="simarropop.ventas_window"/>
 <!--
     <menuitem name="Server to list" id="simarropop" parent="simarropop.menu_2"
               action="simarropop.action_server"/>

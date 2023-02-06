@@ -40,7 +40,8 @@
                     <field name="email"/>
                     <field name="phone"/>
                     <field name="city"/>
-                    <field name="articulos"/>
+                    <field name="articulos_publicados"/>
+                    <field name="articulos_comprados"/>
                     <field name="valoraciones"/>
                     <field name="mensajes"/>
                     <field name="fecha_nacimiento"/>

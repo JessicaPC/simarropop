@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'sale'],
 
     # always loaded
     'data': [
@@ -31,6 +31,7 @@
         'views/modelos/categorias.xml',
         'views/modelos/fotos.xml',
         'views/modelos/valoraciones.xml',
+        'views/modelos/ventas.xml',
         'views/views.xml',
         'views/templates.xml',
     ],

@@ -9,7 +9,8 @@ class usuario(models.Model):
     _inherit = 'res.partner'
 
     #name = fields.Char()
-    articulos = fields.One2many("simarropop.articulo", "usuario")
+    articulos_publicados = fields.One2many("simarropop.articulo", "usuario")
+    articulos_comprados = fields.One2many("simarropop.articulo", "usuario_comprador")
     valoraciones = fields.One2many("simarropop.valoracion", "usuario")
     mensajes = fields.One2many("simarropop.mensaje", "usuario")
     fecha_nacimiento =  fields.Datetime()
@@ -26,6 +27,7 @@ class articulo(models.Model):
 
     name = fields.Char()
     usuario = fields.Many2one("res.partner")
+    usuario_comprador = fields.Many2one("res.partner")
     categoria = fields.Many2one("simarropop.categoria")
     fotos = fields.One2many("simarropop.foto", "articulo")
     fotos_img = fields.Image(related = "fotos.foto_articulo") 
@@ -82,7 +84,20 @@ class valoracion(models.Model):
     opinion = fields.Char()
     puntuacion = fields.Float()
 # ---------------------------------------------------------------------
+class venta(models.Model):
+    #_name = 'simarropop.usuario'
+    _name = 'sale.order'
+    _description = 'Ventas de la App'
+    _inherit = 'sale.order'
 
+    #name = fields.Char()
+    nombre_cliente = fields.Char()
+    fecha_pedido = fields.Datetime()
+    
+
+    
+
+# ---------------------------------------------------------------------
 
 # class simarropop(models.Model):
 #     _name = 'simarropop.simarropop'

@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+
+<!-- HERENCIA  -->
+    <record model="ir.ui.view" id="simarropop_ventas_partner_form">
+      <field name="name">simarropop ventas partner tree</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+          <field name="name"/>   
+      </field>
+    </record>
+  
+  </data>
+</odoo>
