@@ -44,6 +44,7 @@
                     <field name="articulos_comprados"/>
                     <field name="valoraciones"/>
                     <field name="mensajes"/>
+                    <field name="mensajes_receptor"/>
                     <field name="fecha_nacimiento"/>
                   <field name = "is_user"/>
                 </group>

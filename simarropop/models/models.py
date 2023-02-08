@@ -13,6 +13,7 @@ class usuario(models.Model):
     articulos_comprados = fields.One2many("simarropop.articulo", "usuario_comprador")
     valoraciones = fields.One2many("simarropop.valoracion", "usuario")
     mensajes = fields.One2many("simarropop.mensaje", "usuario")
+    mensajes_receptor = fields.One2many("simarropop.mensaje", "usuario")
     fecha_nacimiento =  fields.Datetime()
     contrasenya = fields.Char(required=True)
     is_user = fields.Boolean()
@@ -35,8 +36,7 @@ class articulo(models.Model):
     precio = fields.Float()
     descripcion = fields.Char()
     ubicacion = fields.Char()
-    comprador_nombre = fields.Char()
-    vendedor_nombre = fields.Char()
+
     
 
     
@@ -49,6 +49,7 @@ class mensaje(models.Model):
 
     name = fields.Char()
     usuario = fields.Many2one("res.partner")
+    usuario_receptor = fields.Many2one("res.partner")
     contenido = fields.Char()
 
 # ---------------------------------------------------------------------

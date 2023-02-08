@@ -12,5 +12,19 @@
       </field>
     </record>
 
+
+<!-- FORM mensajes-->
+    <record model="ir.ui.view" id="simarropop_mensajes_form">
+      <field name="name">simarropop mensajes form</field>
+      <field name="model">simarropop.mensaje</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="usuario"/>
+          <field name="usuario_receptor"/>
+        </tree>
+      </field>
+    </record>
+
   </data>
 </odoo>
