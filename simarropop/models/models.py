@@ -18,7 +18,7 @@ class usuario(models.Model):
     fecha_nacimiento =  fields.Datetime()
     contrasenya = fields.Char(required=True)
     is_user = fields.Boolean()
-
+    
     
 
 # ---------------------------------------------------------------------
