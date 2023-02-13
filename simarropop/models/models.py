@@ -10,16 +10,26 @@ class usuario(models.Model):
 
     #name = fields.Char()
     articulos_publicados = fields.One2many("simarropop.articulo", "usuario")
-    articulos_favoritos = fields.Many2many("simarropop.articulo", "usuario")
     articulos_comprados = fields.One2many("simarropop.articulo", "usuario_comprador")
+    articulos_favoritos = fields.Many2many("simarropop.articulo", "usuario")
     valoraciones = fields.One2many("simarropop.valoracion", "usuario")
     mensajes = fields.One2many("simarropop.mensaje", "usuario")
     mensajes_receptor = fields.One2many("simarropop.mensaje", "usuario")
     fecha_nacimiento =  fields.Datetime()
     contrasenya = fields.Char(required=True)
     is_user = fields.Boolean()
+    valoracion_media = fields.Float(compute='_compute_valoracion_media', store=True)
     
-    
+    @api.depends('valoraciones.puntuacion')
+    def _compute_valoracion_media(self):
+        for record in self:
+            valoraciones = record.valoraciones
+            total_puntuacion = 0
+            numero_valoraciones = 0
+            for valoracion in valoraciones:
+                total_puntuacion += valoracion.puntuacion
+                numero_valoraciones += 1
+            record.valoracion_media = total_puntuacion / numero_valoraciones if numero_valoraciones else 0
 
 # ---------------------------------------------------------------------
 class articulo(models.Model):
@@ -88,7 +98,7 @@ class valoracion(models.Model):
     name = fields.Char()
     usuario = fields.Many2one("res.partner")
     opinion = fields.Char()
-    puntuacion = fields.Float()
+    puntuacion = fields.Float(min=1,max=10)
 # ---------------------------------------------------------------------
 class venta(models.Model):
     #_name = 'simarropop.usuario'

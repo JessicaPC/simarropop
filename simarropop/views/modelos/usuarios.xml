@@ -40,9 +40,10 @@
                     <field name="phone"/>
                     <field name="city"/>
                     <field name="articulos_publicados"/>
-                     <field name="articulos_favoritos"/>
                     <field name="articulos_comprados"/>
+                    <field name="articulos_favoritos"/>
                     <field name="valoraciones"/>
+                    <field name="valoracion_media"/>
                     <field name="mensajes"/>
                     <field name="mensajes_receptor"/>
                     <field name="fecha_nacimiento"/>
