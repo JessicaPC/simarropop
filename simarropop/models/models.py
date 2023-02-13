@@ -18,7 +18,9 @@ class usuario(models.Model):
     fecha_nacimiento =  fields.Datetime()
     contrasenya = fields.Char(required=True)
     is_user = fields.Boolean()
-    valoracion_media = fields.Float(compute='_compute_valoracion_media', store=True)
+    valoracion_media = fields.Float(compute='_compute_valoracion_media', store=True) 
+        # store = opción que permite almacenar en BD el valor calculado de ese campo, en lugar de calcularlo cada vez que se consulta. 
+         # Esto puede mejorar significativamente el rendimiento 
     
     @api.depends('valoraciones.puntuacion')
     def _compute_valoracion_media(self):
@@ -30,7 +32,11 @@ class usuario(models.Model):
                 total_puntuacion += valoracion.puntuacion
                 numero_valoraciones += 1
             record.valoracion_media = total_puntuacion / numero_valoraciones if numero_valoraciones else 0
+    # record = variable que se utiliza para almacenar los datos de un registro específico
+        # puede ser utilizada para mostrar o modificar la información 
 
+
+    
 # ---------------------------------------------------------------------
 class articulo(models.Model):
     _name = 'simarropop.articulo'
@@ -45,11 +51,16 @@ class articulo(models.Model):
     fotos_img = fields.Image(related = "fotos.foto_articulo") 
     fotos_img_ruta = fields.Char()
     precio = fields.Float()
+    cantidad = fields.Integer()
+    precio_total = fields.Float(compute='_compute_precio_total')
     descripcion = fields.Char()
     ubicacion = fields.Char()
 
     
-
+    @api.onchange('precio', 'cantidad')
+    def _compute_precio_total(self):
+        for record in self:
+            record.precio_total = record.precio * record.cantidad
     
 # ---------------------------------------------------------------------
 
@@ -122,6 +133,8 @@ class articulo_wizard(models.TransientModel):
     usuario = fields.Many2one('res.partner', string='Usuario')
     categoria = fields.Many2one('simarropop.categoria', string='Categoría')
     precio = fields.Float(string='Precio')
+    cantidad = fields.Integer()
+    precio_total = fields.Float(compute='_compute_precio_total')
     descripcion = fields.Char(string='Descripción')
     ubicacion = fields.Char(string='Ubicación')
     fotos_img = fields.Image(string='Foto')
@@ -134,9 +147,14 @@ class articulo_wizard(models.TransientModel):
             'precio': self.precio,
             'descripcion': self.descripcion,
             'ubicacion': self.ubicacion,
-            'fotos_img': self.foto_articulo,
+            'fotos_img': self.fotos_img,
         })
         return {'type': 'ir.actions.act_window_close'}
+
+    @api.onchange('precio', 'cantidad')
+    def _compute_precio_total(self):
+        for record in self:
+            record.precio_total = record.precio * record.cantidad
 # ---------------------------------------------------------------------
 
 

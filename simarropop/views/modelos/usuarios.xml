@@ -55,6 +55,7 @@
            <notebook>
             <page>
                   <group>
+                  
                     <field name = "fecha_nacimiento" />
                      <field name = "contrasenya" placeholder="Escribe una contraseña" />  
                                
