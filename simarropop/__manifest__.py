@@ -32,6 +32,7 @@
         'views/modelos/fotos.xml',
         'views/modelos/valoraciones.xml',
         'views/modelos/ventas.xml',
+        'views/cron.xml',
         'views/views.xml',
         'views/templates.xml',
     ],

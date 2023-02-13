@@ -55,6 +55,7 @@ class articulo(models.Model):
     precio_total = fields.Float(compute='_compute_precio_total')
     descripcion = fields.Char()
     ubicacion = fields.Char()
+    fecha_publicacion = fields.Datetime()
 
     
     @api.onchange('precio', 'cantidad')
@@ -62,6 +63,13 @@ class articulo(models.Model):
         for record in self:
             record.precio_total = record.precio * record.cantidad
     
+
+    @api.model
+    def actualizar_fecha_publicacion(self):
+        articulos = self.search([])
+        for articulo in articulos:
+            articulo.fecha_publicacion = fields.Datetime.now()
+
 # ---------------------------------------------------------------------
 
 class mensaje(models.Model):

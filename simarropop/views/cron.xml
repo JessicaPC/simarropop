@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+            <record id="simarropop.update_publication_date_cron" forcecreate="True" model="ir.cron">
+                <field name="name">ACTUALIZAR fecha publicacion Articulo</field>
+                <field name="user_id" ref="base.user_root"/>
+                <field name="interval_number">1</field>
+                <field name="interval_type">minutes</field>
+                <field name="numbercall">-1</field>
+                <field eval="False" name="doall"/>
+                <field name="model_id" ref="model_simarropop_articulo"/>
+                <field name="state">code</field>
+                <field name="code">model.actualizar_fecha_publicacion()</field>
+            </record>
+
+
+    </data>
+</odoo>

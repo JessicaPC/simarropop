@@ -68,6 +68,7 @@
             <field name="cantidad" />
             <field name="precio_total" />
             <field name="ubicacion"/>
+            <field name="fecha_publicacion"/>
             </group>
         </form>
       </field>
