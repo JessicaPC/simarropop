@@ -10,6 +10,7 @@ class usuario(models.Model):
 
     #name = fields.Char()
     articulos_publicados = fields.One2many("simarropop.articulo", "usuario")
+    articulos_favoritos = fields.Many2many("simarropop.articulo", "usuario")
     articulos_comprados = fields.One2many("simarropop.articulo", "usuario_comprador")
     valoraciones = fields.One2many("simarropop.valoracion", "usuario")
     mensajes = fields.One2many("simarropop.mensaje", "usuario")
@@ -103,6 +104,31 @@ class venta(models.Model):
     
 
 # ---------------------------------------------------------------------
+# --------------   WIZARDS ------------------------
+class articulo_wizard(models.TransientModel):
+    _name = 'simarropop.articulo_wizard'
+
+    name = fields.Char(string='Nombre')
+    usuario = fields.Many2one('res.partner', string='Usuario')
+    categoria = fields.Many2one('simarropop.categoria', string='Categoría')
+    precio = fields.Float(string='Precio')
+    descripcion = fields.Char(string='Descripción')
+    ubicacion = fields.Char(string='Ubicación')
+    fotos_img = fields.Image(string='Foto')
+    
+    def agregar_articulo(self):
+        articulo = self.env['simarropop.articulo'].create({
+            'name': self.name,
+            'usuario': self.usuario.id,
+            'categoria': self.categoria.id,
+            'precio': self.precio,
+            'descripcion': self.descripcion,
+            'ubicacion': self.ubicacion,
+            'fotos_img': self.foto_articulo,
+        })
+        return {'type': 'ir.actions.act_window_close'}
+# ---------------------------------------------------------------------
+
 
 # class simarropop(models.Model):
 #     _name = 'simarropop.simarropop'

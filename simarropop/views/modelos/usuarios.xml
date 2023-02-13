@@ -21,8 +21,7 @@
       <field name="inherit_id" ref="base.view_partner_form"/>
       <field name="arch" type="xml">
           <field name="name"/>
-   
-       
+      
       </field>
     </record>
 
@@ -41,12 +40,14 @@
                     <field name="phone"/>
                     <field name="city"/>
                     <field name="articulos_publicados"/>
+                     <field name="articulos_favoritos"/>
                     <field name="articulos_comprados"/>
                     <field name="valoraciones"/>
                     <field name="mensajes"/>
                     <field name="mensajes_receptor"/>
                     <field name="fecha_nacimiento"/>
-                  <field name = "is_user"/>
+                    <field name = "is_user"/>
+                      <button name="%(action_add_article)d" type="action" string="Añadir Articulo" class="oe_highlight"/>
                 </group>
             
 
