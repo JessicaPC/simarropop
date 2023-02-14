@@ -26,49 +26,67 @@
     </record>
 
     <!-- FORM usuarios, datos formulario-->
-    <record model="ir.ui.view" id="simarropop.usuarios_form">
-      <field name="name">simarropop form list</field>
-      <field name="model">res.partner</field>
-      <field name="arch" type="xml">
-        <form string="Usuarios form">
-     
-          <sheet>
+<record model="ir.ui.view" id="simarropop.usuarios_form">
+  <field name="name">simarropop form view</field>
+  <field name="model">res.partner</field>
+  <field name="arch" type="xml">
+    <form string="Usuario">
+      <sheet>
+          <group name="datos_personales" string="Datos Personales">
+            <field name="name"/>
+            <field name="avatar_128" widget="image"/>
+            <field name="email"/>
+            <field name="phone"/>
+            <field name="city"/>
+            <field name="is_user"/>
+            <field name="valoraciones"/>
+            <field name="valoracion_media"/>
+          </group>
+          
+          <notebook> 
+            <page string="Articulos publicados">
                 <group>
-                    <field name="name"/>
-                    <field name="avatar_128" widget="image"/>
-                    <field name="email"/>
-                    <field name="phone"/>
-                    <field name="city"/>
-                    <field name="articulos_publicados"/>
-                    <field name="articulos_comprados"/>
-                    <field name="articulos_favoritos"/>
-                    <field name="valoraciones"/>
-                    <field name="valoracion_media"/>
-                    <field name="mensajes"/>
-                    <field name="mensajes_receptor"/>
-                    <field name="fecha_nacimiento"/>
-                    <field name = "is_user"/>
-                      <button name="%(action_add_article)d" type="action" string="Añadir Articulo" class="oe_highlight"/>
+                  <button name="%(action_add_article)d" type="action" string="Añadir Articulo" class="oe_highlight"/>
+                    <field name="articulos_publicados" />
+                   
                 </group>
-            
-
-           <notebook>
-            <page>
-                  <group>
-                  
-                    <field name = "fecha_nacimiento" />
-                     <field name = "contrasenya" placeholder="Escribe una contraseña" />  
-                               
-                  </group>
               </page>
-            </notebook>
-          </sheet>
-   
-        </form>
-      </field>
-    </record> 
+
+            <page string ="Articulos comprados">
+              <field name="articulos_comprados" />
+            </page>  
+          </notebook>
 
 
+          <notebook>
+            <page string="Mensajes enviados">
+              <group>
+                <field name="mensajes"/>
+                </group>
+              </page>
+
+            <page string="Mensajes Recibidos">
+              <group>
+                <field name="mensajes_receptor"/>
+                </group>
+            </page>
+          </notebook>
+
+
+        <notebook>
+          <page string="Seguridad">
+            <group>
+              <field name="fecha_nacimiento"/>
+              <field name="contrasenya" placeholder="Escribe una contraseña" widget="password"/>
+            </group>
+          </page>
+
+        </notebook>
+      </sheet>
+     
+    </form>
+  </field>
+</record>
 
 <!--  SEARCH usuarios  -->
     <record model="ir.ui.view" id="simarropop_usuarios_search">

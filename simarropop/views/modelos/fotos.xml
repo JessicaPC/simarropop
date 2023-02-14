@@ -1,6 +1,35 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
+<!-- Wizard -->
+ <record model="ir.ui.view" id="simarropop.foto_wizard_form">
+      <field name="name">simarropop fotos wizard form</field>
+      <field name="model">simarropop.foto_wizard</field>
+      <field name="arch" type="xml">
+        <form>
+          <footer>
+                <button name="agregar_foto" string="Add Photo" type="object" class="oe_highlight" />
+                <button string="Cancel" class="oe_link" special="cancel" />
+            </footer>
+        <group>
+           <field name="articulo"/>
+            <field name="name"/>
+            <field name="foto_articulo"/>
+            
+          </group>
+        </form>
+      </field>
+    </record>
+
+<!-- Actions wizard-->
+<record id="action_add_photo" model="ir.actions.act_window">
+  <field name="name">Añadir Foto</field>
+  <field name="type">ir.actions.act_window</field>
+  <field name="res_model">simarropop.foto_wizard</field>
+  <field name="view_mode">form</field>
+  <field name="target">new</field>
+</record>
+
 <!-- Vista tree fotos-->
     <record model="ir.ui.view" id="simarropop_fotos_tree">
       <field name="name">simarropop fotos tree</field>
@@ -13,8 +42,7 @@
       </field>
     </record>
 
-    <!-- Vista tree form -->
-
+    <!-- Vista form -->
     <record model="ir.ui.view" id="simarropop_fotos_form">
       <field name="name">simarropop fotos form</field>
       <field name="model">simarropop.foto</field>
@@ -23,6 +51,7 @@
         <group>
             <field name="name"/>
             <field name="foto_articulo"/>
+            <field name="articulo"/>
           </group>
         </form>
       </field>

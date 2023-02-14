@@ -16,20 +16,22 @@
                 <group>
                     <field name="name" />
                     <field name="usuario" domain="[('is_user','=',True)]" />
+                    <field name="usuario_comprador" domain="[('is_user','=',True)]" />
                     <field name="categoria" />
-                    <field name="fotos_img" />
+                    <field name="fotos" />
                     <field name="precio" />
                     <field name="cantidad" />
                     <field name="precio_total" />
                     <field name="descripcion" />
                     <field name="ubicacion" />
+                    
                 </group>
             </sheet>
         </form>
     </field>
 </record>
 
-<!-- actions wizard-->
+<!-- Actions wizard-->
 <record id="action_add_article" model="ir.actions.act_window">
   <field name="name">Añadir Articulo</field>
   <field name="type">ir.actions.act_window</field>
@@ -57,19 +59,27 @@
       <field name="model">simarropop.articulo</field>
       <field name="arch" type="xml">
         <form string="Articulos">
-        <group>
-            <field name="usuario" domain="[('is_user','=',True)]"/>
-            <field name="usuario_comprador" domain="[('is_user','=',True)]"/>
-            <field name="categoria"/>
-            <field name="name"/>
-            <field name="descripcion"/>
-            <field name="fotos"/>
-            <field name="precio"/>
-            <field name="cantidad" />
-            <field name="precio_total" />
-            <field name="ubicacion"/>
-            <field name="fecha_publicacion"/>
-            </group>
+            <group>
+                  <field name="usuario" domain="[('is_user','=',True)]"/>
+                  <field name="usuario_comprador" domain="[('is_user','=',True)]"/>
+                  <field name="categoria"/>
+                  <field name="name"/>
+                  <field name="descripcion"/>
+                  <field name="precio"/>
+                  <field name="cantidad" />
+                  <field name="precio_total" />
+                  <field name="ubicacion"/>
+                  <field name="fecha_publicacion"/>
+                  <field name="persona_articulos_favoritos" domain="[('is_user','=',True)]" />
+              </group>
+          <notebook>
+            <page string="Fotos">
+             <button name="%(action_add_photo)d" type="action" string="Añadir Foto" class="oe_highlight"/>
+              <kanban>
+                 <field name="fotos"/>
+              </kanban>
+            </page>
+          </notebook>
         </form>
       </field>
     </record>
