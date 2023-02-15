@@ -9,16 +9,17 @@ class usuario(models.Model):
     _inherit = 'res.partner'
 
     name = fields.Char(required=True)
+    image_1920 = fields.Image(max_height=100, max_width=100)
     email = fields.Char(required=True)
     phone = fields.Char(required=True)
     city = fields.Char(required=True)
+    fecha_nacimiento =  fields.Date(required=True)
+    contrasenya = fields.Char(required=True)
     articulos_publicados = fields.One2many("simarropop.articulo", "usuario")
     articulos_comprados = fields.One2many("simarropop.articulo", "usuario_comprador")
     valoraciones = fields.One2many("simarropop.valoracion", "usuario")
     mensajes = fields.One2many("simarropop.mensaje", "usuario")
     mensajes_receptor = fields.One2many("simarropop.mensaje", "usuario")
-    fecha_nacimiento =  fields.Datetime()
-    contrasenya = fields.Char(required=True)
     is_user = fields.Boolean()
     valoracion_media = fields.Float(compute='_compute_valoracion_media', store=True) 
         # store = opción que permite almacenar en BD el valor calculado de ese campo, en lugar de calcularlo cada vez que se consulta. 
@@ -37,21 +38,26 @@ class usuario(models.Model):
     # record = variable que se utiliza para almacenar los datos de un registro específico
         # puede ser utilizada para mostrar o modificar la información 
 
-
+    # Comprobar si es  mayor de edad, sino no se crea el usuario
+    @api.constrains('fecha_nacimiento')
+    def _check_mayor_edad(self):
+        for user in self:
+            today = fields.Date.today()
+            age = today.year - user.fecha_nacimiento.year - ((today.month, today.day) < (user.fecha_nacimiento.month, user.fecha_nacimiento.day))
+            if age < 18:
+                raise models.ValidationError("Debes ser mayor de edad para registrarte.")
     
 # ---------------------------------------------------------------------
 class articulo(models.Model):
     _name = 'simarropop.articulo'
     _description = 'Articulos de la App'
         
-    
-      
     name = fields.Char(required=True)
     usuario = fields.Many2one("res.partner")
     usuario_comprador = fields.Many2one("res.partner")
     categoria = fields.Many2one("simarropop.categoria")
     fotos = fields.One2many("simarropop.foto", "articulo")
-    fotos_img = fields.Image(related = "fotos.foto_articulo") 
+    fotos_img = fields.Image(related = "fotos.foto_articulo", max_height=100, max_width=100) 
     fotos_img_ruta = fields.Char()
     precio = fields.Float()
     cantidad = fields.Integer()
@@ -107,7 +113,7 @@ class foto(models.Model):
 
     name = fields.Char()
     articulo = fields.Many2one("simarropop.articulo", ondelete="cascade")# si se borra el articulo, se borran sus fotos
-    foto_articulo = fields.Image()
+    foto_articulo = fields.Image(max_height=100, max_width=100)
     fotos_articulo_ruta = fields.Char()
     
 
@@ -121,7 +127,7 @@ class valoracion(models.Model):
     name = fields.Char(string="Nombre valoracion")
     usuario = fields.Many2one("res.partner")
     opinion = fields.Char()
-    puntuacion = fields.Float(min=1,max=10)
+    puntuacion = fields.Float(min=1,max=5)
 # ---------------------------------------------------------------------
 class venta(models.Model):
     #_name = 'simarropop.usuario'

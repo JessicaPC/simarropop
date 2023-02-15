@@ -12,9 +12,9 @@
                 <button string="Cancel" class="oe_link" special="cancel" />
             </footer>
         <group>
-           <field name="articulo"/>
-            <field name="name"/>
-            <field name="foto_articulo"/>
+            <field name="name" string="Nombre Foto"/>
+            <field name="articulo"/>
+            <field name="foto_articulo" string="Subir Imagen"/>
             
           </group>
         </form>
@@ -49,8 +49,8 @@
       <field name="arch" type="xml">
         <form>
         <group>
-            <field name="name"/>
-            <field name="foto_articulo"/>
+            <field name="name" string="Nombre Foto "/>
+            <field name="foto_articulo" string="Url base64 img" widget="image"/>
             <field name="articulo"/>
           </group>
         </form>

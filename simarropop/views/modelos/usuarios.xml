@@ -35,7 +35,7 @@
       <sheet>
           <group name="datos_personales" string="Datos Personales">
             <field name="name"/>
-            <field name="image_1920" widget="image" string="Foto de Perfil"/>
+            <field name="image_1920" widget="image" string="Foto de Perfil" />
             <field name="email"/>
             <field name="phone"/>
             <field name="city"/>
