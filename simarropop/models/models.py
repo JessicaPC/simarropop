@@ -11,7 +11,6 @@ class usuario(models.Model):
     #name = fields.Char()
     articulos_publicados = fields.One2many("simarropop.articulo", "usuario")
     articulos_comprados = fields.One2many("simarropop.articulo", "usuario_comprador")
-   
     valoraciones = fields.One2many("simarropop.valoracion", "usuario")
     mensajes = fields.One2many("simarropop.mensaje", "usuario")
     mensajes_receptor = fields.One2many("simarropop.mensaje", "usuario")
@@ -41,8 +40,9 @@ class usuario(models.Model):
 class articulo(models.Model):
     _name = 'simarropop.articulo'
     _description = 'Articulos de la App'
+        
     
-
+      
     name = fields.Char()
     usuario = fields.Many2one("res.partner")
     usuario_comprador = fields.Many2one("res.partner")
@@ -54,11 +54,11 @@ class articulo(models.Model):
     cantidad = fields.Integer()
     precio_total = fields.Float(compute='_compute_precio_total')
     descripcion = fields.Char()
-    ubicacion = fields.Char()
+    ubicacion = fields.Char(related="usuario.city")
     fecha_publicacion = fields.Datetime()
     persona_articulos_favoritos = fields.Many2many("res.partner", string="Personas que les gusta este articulo")
 
-    
+    #se cambia el precio en valor de la cantidad que haya de ese articulo
     @api.onchange('precio', 'cantidad')
     def _compute_precio_total(self):
         for record in self:
@@ -143,6 +143,7 @@ class articulo_wizard(models.TransientModel):
         return self.env['res.partner'].browse(self._context.get('active_id'))  # El context conté, entre altre coses,
         # el active_id del model que està obert.
 
+   
 
     name = fields.Char(string='Nombre')
     usuario = fields.Many2one('res.partner', string='Usuario', default=_default_articulo)
@@ -152,7 +153,7 @@ class articulo_wizard(models.TransientModel):
     cantidad = fields.Integer()
     precio_total = fields.Float(compute='_compute_precio_total')
     descripcion = fields.Char(string='Descripción')
-    ubicacion = fields.Char(string='Ubicación')
+    ubicacion = fields.Char(string='Ubicación', related="usuario.city")
     fotos = fields.One2many("simarropop.foto", "articulo")
  
     
@@ -165,7 +166,7 @@ class articulo_wizard(models.TransientModel):
             'precio': self.precio,
             'descripcion': self.descripcion,
             'ubicacion': self.ubicacion,
-            'fotos': self.fotos.id,
+          
          
         })
         return {'type': 'ir.actions.act_window_close'}
@@ -184,7 +185,7 @@ class foto_wizard(models.TransientModel):
       
 
     name = fields.Char(string="foto")
-    articulo = fields.Many2one("simarropop.articulo", ondelete="cascade", default=_default_foto)# si se borra el articulo, se borran sus fotos
+    articulo = fields.Many2one("simarropop.articulo", ondelete="cascade", default=_default_foto)
     foto_articulo = fields.Image()
     fotos_articulo_ruta = fields.Char()
 

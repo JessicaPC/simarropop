@@ -20,7 +20,7 @@ class player(models.Model):
     anyo_nacimiento = fields.Integer(required=True)
     fecha_registro = fields.Datetime(default=datetime.today())
     bandoname = fields.Char(related="bando.name")
-    is_player = fields.Boolean(default=True)
+    is_player = fields.Boolean()
 
 
     @api.onchange('anyo_nacimiento')
@@ -207,7 +207,7 @@ class building_type(models.Model):
                     "colony": colony_id.id,
                     "type": b.id
                 })
-                colony_id.player.money -= b.cost_structure
+                colony_id.money -= b.cost_structure
             else:
                  raise ValidationError("Saldo insuficiente")
 

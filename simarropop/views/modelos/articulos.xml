@@ -18,7 +18,6 @@
                     <field name="usuario" domain="[('is_user','=',True)]" />
                     <field name="usuario_comprador" domain="[('is_user','=',True)]" />
                     <field name="categoria" />
-                    <field name="fotos" />
                     <field name="precio" />
                     <field name="cantidad" />
                     <field name="precio_total" />
