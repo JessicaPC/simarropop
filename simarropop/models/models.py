@@ -8,7 +8,10 @@ class usuario(models.Model):
     _description = 'Users de la App'
     _inherit = 'res.partner'
 
-    #name = fields.Char()
+    name = fields.Char(required=True)
+    email = fields.Char(required=True)
+    phone = fields.Char(required=True)
+    city = fields.Char(required=True)
     articulos_publicados = fields.One2many("simarropop.articulo", "usuario")
     articulos_comprados = fields.One2many("simarropop.articulo", "usuario_comprador")
     valoraciones = fields.One2many("simarropop.valoracion", "usuario")
@@ -43,7 +46,7 @@ class articulo(models.Model):
         
     
       
-    name = fields.Char()
+    name = fields.Char(required=True)
     usuario = fields.Many2one("res.partner")
     usuario_comprador = fields.Many2one("res.partner")
     categoria = fields.Many2one("simarropop.categoria")
