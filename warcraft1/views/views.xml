@@ -23,7 +23,7 @@
       <field name="view_mode">tree,form,kanban</field>
       <field name="domain"></field>
       <field name="context">{'default_is_player': True}</field>
-      <field name="search_view_id" ref="warcraft1.player_search"></field>
+      <field name="search_view_id" ref="warcraft1.player_search_filtro"></field>
       <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'tree', 'view_id': ref('warcraft1.playertree')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('warcraft1.playerform')}),]" />

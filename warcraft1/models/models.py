@@ -102,7 +102,6 @@ class colony(models.Model):
                 c.food_production =  sum(c.buildings.mapped('food_production'))
                 c.warrior_production =  sum(c.buildings.mapped('warrior_production'))
                 
-
             else:
                 c.money = c.money
 
@@ -114,12 +113,13 @@ class colony(models.Model):
 
     def produce_colony(self):
         for colony in self:
-            money = colony.money + colony.money_production
-            water = colony.water + colony.water_production
-            metal = colony.metal + colony.metal_production
-            wood = colony.wood + colony.wood_production
-            food = colony.food + colony.food_production
-            warrior = colony.warrior + colony.warrior_production
+            if len(colony.buildings)>0:
+                money = colony.money + colony.money_production
+                water = colony.water + colony.water_production
+                metal = colony.metal + colony.metal_production
+                wood = colony.wood + colony.wood_production
+                food = colony.food + colony.food_production
+                warrior = colony.warrior + colony.warrior_production
         
 
             colony.write({

@@ -198,7 +198,7 @@
 
 
 <!--  SEARCH  -->
-  <record model="ir.ui.view" id="warcraft1.player_search">
+  <record model="ir.ui.view" id="warcraft1.player_search_filtro">
       <field name="name">warcraft1 search</field>
       <field name="model">res.partner</field>
       <field name="priority" eval="17"/>
