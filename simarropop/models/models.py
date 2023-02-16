@@ -47,6 +47,11 @@ class usuario(models.Model):
             if age < 18:
                 raise models.ValidationError("Debes ser mayor de edad para registrarte.")
     
+    @api.constrains('email')
+    def _check_email(self):
+        for user in self:
+            if user.email and self.search([('email', '=', user.email), ('id', '!=', user.id)]):
+                raise ValidationError('El correo electrónico ya está registrado.')
 # ---------------------------------------------------------------------
 class articulo(models.Model):
     _name = 'simarropop.articulo'
@@ -88,10 +93,10 @@ class mensaje(models.Model):
     
 
     name = fields.Char()
-    usuario = fields.Many2one("res.partner")
-    usuario_receptor = fields.Many2one("res.partner")
+    usuario = fields.Many2one("res.partner", string="usuario Emisor")
+    usuario_receptor = fields.Many2one("res.partner", string="usuario Receptor")
     contenido = fields.Char()
-
+    fecha_envio = fields.Datetime(string='Fecha de envío', default=fields.Datetime.now)
 # ---------------------------------------------------------------------
 
 class categoria(models.Model):
@@ -140,7 +145,6 @@ class venta(models.Model):
     usuario_nombre = fields.Char()
     accion_nombre = fields.Char()
 
-    
 
 # ---------------------------------------------------------------------
 # --------------   WIZARDS ------------------------
