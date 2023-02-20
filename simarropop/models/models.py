@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+import base64
 
 class usuario(models.Model):
     #_name = 'simarropop.usuario'
@@ -17,6 +18,7 @@ class usuario(models.Model):
     contrasenya = fields.Char(required=True)
     articulos_publicados = fields.One2many("simarropop.articulo", "usuario")
     articulos_comprados = fields.One2many("simarropop.articulo", "usuario_comprador")
+    favoritos = fields.One2many('simarropop.favorito', 'usuario')
     valoraciones = fields.One2many("simarropop.valoracion", "usuario")
     mensajes = fields.One2many("simarropop.mensaje", "usuario")
     mensajes_receptor = fields.One2many("simarropop.mensaje", "usuario")
@@ -69,8 +71,10 @@ class articulo(models.Model):
     precio_total = fields.Float(compute='_compute_precio_total')
     descripcion = fields.Char()
     ubicacion = fields.Char(related="usuario.city")
+    latitud_ubicacion =  fields.Float()
+    longitud_ubicacion =  fields.Float()
     fecha_publicacion = fields.Datetime()
-    persona_articulos_favoritos = fields.Many2many("res.partner", string="Personas que les gusta este articulo")
+    favoritos = fields.One2many('simarropop.favorito', 'articulo')
 
     #se cambia el precio en valor de la cantidad que haya de ese articulo
     @api.onchange('precio', 'cantidad')
@@ -85,6 +89,14 @@ class articulo(models.Model):
         for articulo in articulos:
             articulo.fecha_publicacion = fields.Datetime.now()
 
+# ---------------------------------------------------------------------
+class favorito(models.Model):
+    _name = 'simarropop.favorito'
+    _description = 'Artículos favoritos de los usuarios'
+
+    usuario = fields.Many2one('res.partner', required=True)
+    articulo = fields.Many2one('simarropop.articulo', required=True)
+    es_favorito = fields.Boolean(default=True)
 # ---------------------------------------------------------------------
 
 class mensaje(models.Model):
@@ -118,9 +130,36 @@ class foto(models.Model):
 
     name = fields.Char()
     articulo = fields.Many2one("simarropop.articulo", ondelete="cascade")# si se borra el articulo, se borran sus fotos
-    foto_articulo = fields.Image(max_height=100, max_width=100)
-    fotos_articulo_ruta = fields.Char()
+    foto_articulo = fields.Image(max_height=100, max_width=100)  
+    foto_articulo_ruta = fields.Text()
+
+    @api.onchange('foto_articulo')
+    def onchange_foto_articulo(self):
+        if self.foto_articulo:
+            # Codificar la imagen en base64
+            img_base64 = base64.b64encode(self.foto_articulo).decode('utf-8')
+            # Almacenar la cadena base64 en el campo de texto
+            self.foto_articulo_ruta = img_base64
+'''
+    @api.depends('foto_articulo')
+    def guardar_imagen(self):
+        for r in self:
+            if r.foto_articulo:
+                image = base64.b64encode(r.foto_articulo).decode('utf-8')
+                r.foto_articulo_ruta = image
+            else:
+                r.foto_articulo_ruta = False
     
+    
+    foto_articulo_ruta = fields.Text(compute='guardar_imagen')
+    
+    @api.depends('foto_articulo_ruta')
+    def ruta_string(self):
+        for b in self:
+            b.ruta = base64.b64decode(b.foto_articulo_ruta).decode('utf-8')
+
+    ruta = fields.Text(compute='ruta_string')
+    '''
 
 # ---------------------------------------------------------------------
 
@@ -200,19 +239,30 @@ class foto_wizard(models.TransientModel):
     name = fields.Char(string="foto")
     articulo = fields.Many2one("simarropop.articulo", ondelete="cascade", default=_default_foto)
     foto_articulo = fields.Image()
-    fotos_articulo_ruta = fields.Char()
+    foto_articulo_ruta = fields.Char()
 
     
 
     def agregar_foto(self):
+         # Codificar la imagen en base64
+        img_base64 = base64.b64encode(self.foto_articulo).decode('utf-8')
+
         foto = self.env['simarropop.foto'].create({
             'name': self.name,
             'articulo': self.articulo.id,
             'foto_articulo': self.foto_articulo,
-            'fotos_articulo_ruta': self.fotos_articulo_ruta,
+            'foto_articulo_ruta': img_base64, # Guardar la ruta de la imagen,
             
         })
         return {'type': 'ir.actions.act_window_close'}
+
+    @api.onchange('foto_articulo')
+    def onchange_foto_articulo(self):
+        if self.foto_articulo:
+            # Codificar la imagen en base64
+            img_base64 = base64.b64encode(self.foto_articulo).decode('utf-8')
+            # Almacenar la cadena base64 en el campo de texto
+            self.foto_articulo_ruta = img_base64
 
 # ---------------------------------------------------------------------
 

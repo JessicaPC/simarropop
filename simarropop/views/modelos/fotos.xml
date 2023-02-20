@@ -50,7 +50,9 @@
         <form>
         <group>
             <field name="name" string="Nombre Foto "/>
-            <field name="foto_articulo" string="Url base64 img" widget="image"/>
+            <field name="foto_articulo" string="Imagen" widget="image"/>
+            <field name="foto_articulo_ruta" />
+            <!--<field name="ruta"/>-->
             <field name="articulo"/>
           </group>
         </form>

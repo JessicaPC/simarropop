@@ -23,7 +23,7 @@
                     <field name="precio_total" />
                     <field name="descripcion" />
                     <field name="ubicacion" />
-                    
+                
                 </group>
             </sheet>
         </form>
@@ -68,8 +68,10 @@
                   <field name="cantidad" />
                   <field name="precio_total" />
                   <field name="ubicacion"/>
+                  <field name="latitud_ubicacion" />
+                  <field name="longitud_ubicacion" />
                   <field name="fecha_publicacion"/>
-                  <field name="persona_articulos_favoritos" domain="[('is_user','=',True)]" />
+                <!-- <field name="persona_articulos_favoritos" domain="[('is_user','=',True)]" />-->
               </group>
           <notebook>
             <page string="Fotos">
