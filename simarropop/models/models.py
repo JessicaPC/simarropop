@@ -18,7 +18,7 @@ class usuario(models.Model):
     contrasenya = fields.Char(required=True)
     articulos_publicados = fields.One2many("simarropop.articulo", "usuario")
     articulos_comprados = fields.One2many("simarropop.articulo", "usuario_comprador")
-    favoritos = fields.One2many('simarropop.favorito', 'usuario')
+    articulos_favoritos = fields.Many2many("simarropop.articulo")
     valoraciones = fields.One2many("simarropop.valoracion", "usuario")
     mensajes = fields.One2many("simarropop.mensaje", "usuario")
     mensajes_receptor = fields.One2many("simarropop.mensaje", "usuario")
@@ -74,7 +74,7 @@ class articulo(models.Model):
     latitud_ubicacion =  fields.Float()
     longitud_ubicacion =  fields.Float()
     fecha_publicacion = fields.Datetime()
-    favoritos = fields.One2many('simarropop.favorito', 'articulo')
+    persona_articulos_favoritos = fields.Many2many("res.partner", string="Personas que les gusta este articulo")
 
     #se cambia el precio en valor de la cantidad que haya de ese articulo
     @api.onchange('precio', 'cantidad')
@@ -89,15 +89,17 @@ class articulo(models.Model):
         for articulo in articulos:
             articulo.fecha_publicacion = fields.Datetime.now()
 
+
 # ---------------------------------------------------------------------
-class favorito(models.Model):
+
+class Favorito(models.Model):
     _name = 'simarropop.favorito'
     _description = 'Artículos favoritos de los usuarios'
 
     usuario = fields.Many2one('res.partner', required=True)
     articulo = fields.Many2one('simarropop.articulo', required=True)
     es_favorito = fields.Boolean(default=True)
-# ---------------------------------------------------------------------
+
 
 class mensaje(models.Model):
     _name = 'simarropop.mensaje'
