@@ -42,6 +42,8 @@
             <field name="is_user"/>
             <field name="valoraciones"/>
             <field name="valoracion_media"/>
+              <field name="favoritos"/>
+
           </group>
           
           <notebook> 

@@ -71,6 +71,8 @@
                   <field name="latitud_ubicacion" />
                   <field name="longitud_ubicacion" />
                   <field name="fecha_publicacion"/>
+                  <field name="favoritos"/>
+
                 <!-- <field name="persona_articulos_favoritos" domain="[('is_user','=',True)]" />-->
               </group>
           <notebook>
