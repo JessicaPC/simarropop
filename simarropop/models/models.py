@@ -65,14 +65,14 @@ class articulo(models.Model):
     categoria = fields.Many2one("simarropop.categoria")
     fotos = fields.One2many("simarropop.foto", "articulo")
     fotos_img = fields.Image(related = "fotos.foto_articulo", max_height=100, max_width=100) 
-    fotos_img_ruta = fields.Char()
+    fotos_img_ruta = fields.Text(related="fotos.foto_articulo_ruta")
     precio = fields.Float()
     cantidad = fields.Integer()
     precio_total = fields.Float(compute='_compute_precio_total')
     descripcion = fields.Char()
     ubicacion = fields.Char(related="usuario.city")
-    latitud_ubicacion =  fields.Float()
-    longitud_ubicacion =  fields.Float()
+    latitud_ubicacion =  fields.Float(digits=(16, 8))
+    longitud_ubicacion =  fields.Float(digits=(16, 8))
     fecha_publicacion = fields.Datetime()
     persona_articulos_favoritos = fields.Many2many("res.partner", string="Personas que les gusta este articulo")
 
@@ -92,13 +92,6 @@ class articulo(models.Model):
 
 # ---------------------------------------------------------------------
 
-class Favorito(models.Model):
-    _name = 'simarropop.favorito'
-    _description = 'Artículos favoritos de los usuarios'
-
-    usuario = fields.Many2one('res.partner', required=True)
-    articulo = fields.Many2one('simarropop.articulo', required=True)
-    es_favorito = fields.Boolean(default=True)
 
 
 class mensaje(models.Model):
@@ -121,7 +114,7 @@ class categoria(models.Model):
     name = fields.Char()
     articulo = fields.One2many("simarropop.articulo", "categoria")
     descripcion_categoria = fields.Char()
-    categoria_img = fields.Image()
+    categoria_img = fields.Image(max_height=45,max_width=45)
    
     
 # ---------------------------------------------------------------------
@@ -132,7 +125,7 @@ class foto(models.Model):
 
     name = fields.Char()
     articulo = fields.Many2one("simarropop.articulo", ondelete="cascade")# si se borra el articulo, se borran sus fotos
-    foto_articulo = fields.Image(max_height=100, max_width=100)  
+    foto_articulo = fields.Image(max_height=200, max_width=200)  
     foto_articulo_ruta = fields.Text()
 
     @api.onchange('foto_articulo')
@@ -140,29 +133,13 @@ class foto(models.Model):
         if self.foto_articulo:
             # Codificar la imagen en base64
             img_base64 = base64.b64encode(self.foto_articulo).decode('utf-8')
+            img_final = base64.b64decode(img_base64)
+          #  print(img_base64)
+            print(img_final)
             # Almacenar la cadena base64 en el campo de texto
-            self.foto_articulo_ruta = img_base64
-'''
-    @api.depends('foto_articulo')
-    def guardar_imagen(self):
-        for r in self:
-            if r.foto_articulo:
-                image = base64.b64encode(r.foto_articulo).decode('utf-8')
-                r.foto_articulo_ruta = image
-            else:
-                r.foto_articulo_ruta = False
+            self.foto_articulo_ruta = img_final
     
-    
-    foto_articulo_ruta = fields.Text(compute='guardar_imagen')
-    
-    @api.depends('foto_articulo_ruta')
-    def ruta_string(self):
-        for b in self:
-            b.ruta = base64.b64decode(b.foto_articulo_ruta).decode('utf-8')
-
-    ruta = fields.Text(compute='ruta_string')
-    '''
-
+   
 # ---------------------------------------------------------------------
 
 class valoracion(models.Model):

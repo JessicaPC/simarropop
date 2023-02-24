@@ -78,6 +78,7 @@
              <button name="%(action_add_photo)d" type="action" string="Añadir Foto" class="oe_highlight"/>
               <kanban>
                  <field name="fotos"/>
+                 <field name="fotos_img_ruta"/>
               </kanban>
             </page>
           </notebook>
