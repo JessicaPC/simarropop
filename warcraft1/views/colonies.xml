@@ -6,6 +6,7 @@
       <field name="model">warcraft1.colony</field>
       <field name="arch" type="xml">
         <tree>
+                <field name="warrior"/>
                 <field name="name"/>
                 <field name="money"/>
                 <field name="water"/>

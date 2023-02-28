@@ -25,15 +25,14 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/players.xml',
-        'views/bandos.xml',
         'views/battles.xml',
+        'views/bandos.xml',
+        'views/players.xml',
         'views/buildings.xml',
         'views/colonies.xml',
         'views/cron.xml',
         'views/views.xml',
         'views/templates.xml',
-        'views/cron.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

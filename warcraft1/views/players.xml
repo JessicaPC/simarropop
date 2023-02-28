@@ -110,6 +110,9 @@
                   <field name = "avatar" widget="image"/>
                   <field name = "bando" widget="radio"/>
                   <field name = "is_player"/>
+                  <field name = "colony"/>
+                  <field name = "colony_count"/>
+
 
                   </group>
             

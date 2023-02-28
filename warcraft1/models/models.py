@@ -21,6 +21,8 @@ class player(models.Model):
     fecha_registro = fields.Datetime(default=datetime.today())
     bandoname = fields.Char(related="bando.name")
     is_player = fields.Boolean()
+    colony = fields.One2many("warcraft1.colony", "player")
+    colony_count = fields.Integer(compute="_compute_colony_count", store=True)
 
 
     @api.onchange('anyo_nacimiento')
@@ -41,6 +43,11 @@ class player(models.Model):
             'target':'new',
         }
 
+    @api.depends('colony')
+    def _compute_colony_count(self):
+        for player in self:
+            player.colony_count = len(player.colony)
+
 class bando(models.Model):
     _name = 'warcraft1.bando'
     _description = 'Bandos'
@@ -58,7 +65,7 @@ class colony(models.Model):
 
 
     name = fields.Char(required=True)
-    player = fields.Many2one('res.partner', domain="[('is_player','=',True)]", ondelete="cascade")
+    player = fields.Many2one('res.partner', domain="[('is_player','=',True)]", ondelete="cascade",required=True)
     player_avatar = fields.Image(related="player.avatar", string="Player Avatar")
     money = fields.Float(default=100.0)
     buildings = fields.One2many('warcraft1.building', 'colony')
@@ -113,14 +120,15 @@ class colony(models.Model):
 
     def produce_colony(self):
         for colony in self:
+            money = colony.money
+            water = colony.water + colony.water_production
+            metal = colony.metal + colony.metal_production
+            wood = colony.wood + colony.wood_production
+            food = colony.food + colony.food_production
+            warrior = colony.warrior + colony.warrior_production
+            
             if len(colony.buildings)>0:
-                money = colony.money + colony.money_production
-                water = colony.water + colony.water_production
-                metal = colony.metal + colony.metal_production
-                wood = colony.wood + colony.wood_production
-                food = colony.food + colony.food_production
-                warrior = colony.warrior + colony.warrior_production
-        
+                money += colony.money_production
 
             colony.write({
                 "money":money,
@@ -132,7 +140,9 @@ class colony(models.Model):
             })
 
 
-
+    _sql_constraints = [    ('player_uniq', 'unique(player)', 'Un jugador solo puede tener una colonia'),  ('name_uniq', 'unique(name)', 'El nombre de la colonia debe ser único'),]
+    
+    
 class building(models.Model):
     _name = 'warcraft1.building'
     _description = 'Buildings'
@@ -217,11 +227,51 @@ class battle(models.Model):
     _name = 'warcraft1.battle'
     _description = 'Battle'
 
-    name = fields.Char()
+    name = fields.Char(required=True)
     date_start = fields.Datetime()
     date_end = fields.Datetime()
-    player1 = fields.Many2one('res.partner')
-    player2 = fields.Many2one('res.partner')
+    player1 = fields.Many2one('res.partner', string='Player 1', required=True)
+    player2 = fields.Many2one('res.partner', string='Player 2', required=True)
+    colony_count_p1 = fields.Integer(string='Player 1 Colonies', related="player1.colony_count")
+    colony_count_p2 = fields.Integer(string='Player 2 Colonies',  related="player2.colony_count")
+    player_ids = fields.Many2many('res.partner', string='Players')
+    winner = fields.Char(string='Winner')
+
+    _sql_constraints = [('unique_players', 'CHECK (player1 != player2)', 'Both players should be different')]
+
+    @api.constrains('player1', 'player2')
+    def _check_players(self):
+        if self.player1 == self.player2:
+            raise ValidationError("Both players should be different")
+ 
+    @api.onchange('player_ids')
+    def _onchange_player_ids(self):
+        if self.player1 and self.player2:
+            colony_count_p1 = sum(player.colony_count for player in self.player_ids.filtered(lambda p: p.id == self.player1.id))
+            colony_count_p2 = sum(player.colony_count for player in self.player_ids.filtered(lambda p: p.id == self.player2.id))
+            self.colony_count_p1 = colony_count_p1
+            self.colony_count_p2 = colony_count_p2
+    
+    def start_battle(self):
+        if self.colony_count_p1 <= 0 or self.colony_count_p2 <= 0:
+            raise ValidationError("Both players must have at least one colony")
+
+        if self.player1.colony.warrior > self.player2.colony.warrior:
+            self.winner = self.player1.name
+        elif self.player2.colony.warrior > self.player1.colony.warrior:
+            self.winner = self.player2.name
+        else:
+            self.winner = 'Tie!'
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Winner!',
+                'message': f'The winner is {self.winner}!',
+                'sticky': False,
+            }
+        }
+
 #    type = fields.Many2one('warcraft1.building_type')
 
 
@@ -251,7 +301,7 @@ class player_wizard(models.TransientModel):
 
 
 class battle_wizard(models.TransientModel):
-    _name = 'warcraft1.battle'
+    _name = 'warcraft1.battle_wizard'
     _description = 'Battle'
 
     name = fields.Char()
