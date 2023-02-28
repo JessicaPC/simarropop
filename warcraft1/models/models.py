@@ -274,7 +274,7 @@ class battle(models.Model):
 
 #    type = fields.Many2one('warcraft1.building_type')
 
-
+# ---------------------------- WIZARD -----------------------------------
 # model que pot ser, siga borrat
 class player_wizard(models.TransientModel):
     _name = 'warcraft1.player_wizard'
@@ -297,29 +297,202 @@ class player_wizard(models.TransientModel):
                         "is_player":True,
                         })
 
-                        
 
-
+# NO ES PODIA crear un boto per a crear tots els pasos fins a la batalla dalt, per la ver. de odoo
+# crear usuaris>crear colonies> crear batalla
+# Aixi, que el botó es troba dins d'un player en la seua vista form
+# seleccionar jugador1>seleccionar juagdor2 > crear batalla
 class battle_wizard(models.TransientModel):
     _name = 'warcraft1.battle_wizard'
-    _description = 'Battle'
+    _description = 'Battle Wizard'
+
+
+    def _default_player(self):
+        return self.env['res.partner'].browse(self._context.get('active_id')) 
 
     name = fields.Char()
     date_start = fields.Datetime()
     date_end = fields.Datetime()
-    player1 = fields.Many2one('res.partner')
-    player2 = fields.Many2one('res.partner')
+    player1 = fields.Many2one('res.partner', string='Player 1', default=_default_player)
+    player2 = fields.Many2one('res.partner', string='Player 2')
+    colony_count_p1 = fields.Integer(string='Player 1 Colonies', related="player1.colony_count")
+    colony_count_p2 = fields.Integer(string='Player 2 Colonies',  related="player2.colony_count")
+    player_ids = fields.Many2many('res.partner', string='Players')
+    winner = fields.Char(string='Winner')
+    state = fields.Selection([('1', 'Jugador1'),('2', 'Jugador2'),('3', 'Batalla')], default='1')
 
-# class warcraft1(models.Model):
-#     _name = 'warcraft1.warcraft1'
-#     _description = 'warcraft1.warcraft1'
+    _sql_constraints = [('unique_players', 'CHECK (player1 != player2)', 'Both players should be different')]
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+    @api.constrains('player1', 'player2')
+    def _check_players(self):
+        if self.player1 == self.player2:
+            raise ValidationError("Both players should be different")
+ 
+    @api.onchange('player_ids')
+    def _onchange_player_ids(self):
+        if self.player1 and self.player2:
+            colony_count_p1 = sum(player.colony_count for player in self.player_ids.filtered(lambda p: p.id == self.player1.id))
+            colony_count_p2 = sum(player.colony_count for player in self.player_ids.filtered(lambda p: p.id == self.player2.id))
+            self.colony_count_p1 = colony_count_p1
+            self.colony_count_p2 = colony_count_p2
+    
+    def start_battle(self):
+        if self.colony_count_p1 <= 0 or self.colony_count_p2 <= 0:
+            raise ValidationError("Both players must have at least one colony")
+
+        if self.player1.colony.warrior > self.player2.colony.warrior:
+            self.winner = self.player1.name
+        elif self.player2.colony.warrior > self.player1.colony.warrior:
+            self.winner = self.player2.name
+        else:
+            self.winner = 'Tie!'
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Winner!',
+                'message': f'The winner is {self.winner}!',
+                'sticky': False,
+            }
+        }
+
+    def action_previous(self):
+        if self.state == '2':
+            self.state = '1'
+        elif self.state == '3':
+            self.state = '2'
+        return{
+            'name': 'create battle',
+            'type': 'ir.actions.act_window',
+            'res_model': 'warcraft1.battle_wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'res_id': self.id
+        }
+    
+    def action_next(self):
+        if self.state == '1':
+            self.state = '2'
+        elif self.state == '2':
+            self.state = '3'
+        elif self.state == '3':
+            if not self.name or not self.player1 or not self.player2:
+                raise ValidationError("Please fill in all required fields")
+        return {
+            'name': 'create battle',
+            'type': 'ir.actions.act_window',
+            'res_model': 'warcraft1.battle_wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'res_id': self.id,
+        }
+
+
+    def edit_player(self):
+        if self.state == '1':
+            return {
+                'name': 'edit player',
+                'type': 'ir.actions.act_window',
+                'res_model': 'warcraft1.edit_player_state1',
+                'view_mode': 'form',
+                'target': 'new',
+                'context':{ 
+                    'ctx_player':self.player1.id,
+                    'keep_open': True
+                }
+            }
+        elif self.state == '2':
+            return {
+                'name': 'edit player',
+                'type': 'ir.actions.act_window',
+                'res_model': 'warcraft1.edit_player_state1',
+                'view_mode': 'form',
+                'target': 'new',
+                'context':{ 
+                    'ctx_player':self.player2.id,
+                    'keep_open': True
+                }
+            }
+    
+    def action_battle_wizard(self):
+        if self._context.get('keep_open'):
+            return {'type': 'ir.actions.act_window_close'}
+
+        battle = self.env['warcraft1.battle'].create({
+            'name': self.name,
+            'date_start': self.date_start,
+            'date_end': self.date_end,
+            'player1': self.player1.id,
+            'player2': self.player2.id,
+            'colony_count_p1': self.colony_count_p1,
+            'colony_count_p2': self.colony_count_p2,
+            'player_ids': self.player_ids.id,
+            'winner': self.winner,
+          
+         
+        })
+        return {'type': 'ir.actions.act_window_close'}
+
+
+
+class edit_player_state1(models.Model):
+    _name = 'warcraft1.edit_player_state1'
+    _description = 'Players State'
+
+
+    def _default_player(self):
+        player_id = self.env.context.get('ctx_player')
+        if player_id:
+            return self.env['res.partner'].browse(player_id) 
+        return self.env['res.partner']
+
+    player = fields.Many2one('res.partner', string='Player 1', default=_default_player)
+    name = fields.Char(string="Nombre", required=True)
+    password = fields.Char(required=True)
+    avatar = fields.Image(max_width = 100, max_height=100)
+    bando = fields.Many2one("warcraft1.bando")
+    bandoimg = fields.Image()
+    anyo_nacimiento = fields.Integer(required=True)
+    fecha_registro = fields.Datetime(default=datetime.today())
+    bandoname = fields.Char()
+    is_player = fields.Boolean()
+    colony = fields.One2many("warcraft1.colony", "player")
+    colony_count = fields.Integer(compute="_compute_colony_count", store=True)
+    
+    @api.onchange('anyo_nacimiento')
+    def _onchange_registro(self):
+        if self.anyo_nacimiento > 2015:
+            return {'warning' : {'title':'Bad birth year','message': 'The Player is too young'}}
+      
+    _sql_constraints = [('nombre_uniq','UNIQUE(name)','El nom no es por repetir')]
+
+
+     #llança un action  
+    def launch_player_wizard(self):
+        return {
+            'name': 'Create Player',
+            'type':'ir.actions.act_window',
+            'res_model':'warcraft1.player_wizard',
+            'view_mode':'form',
+            'target':'new',
+        }
+
+    @api.depends('colony')
+    def _compute_colony_count(self):
+        for player in self:
+            player.colony_count = len(player.colony)
+
+    def edit_player(self):
+        self.player.write({
+            'name': self.name,
+            'password': self.password,
+            'avatar': self.avatar,
+            'bando': self.bando.id,
+            'bandoimg': self.bandoimg,
+            'anyo_nacimiento': self.anyo_nacimiento,
+            'fecha_registro': self.fecha_registro,
+            'bandoname': self.bandoname,
+            'is_player': self.is_player,
+            'colony': self.colony.id,
+            'colony_count': self.colony_count,
+        })

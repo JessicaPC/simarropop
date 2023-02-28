@@ -48,6 +48,52 @@
 </record> 
 
 
+
+
+<!-- WIZARD FORM 2 Edit Player  -->
+  <record model="ir.ui.view" id="warcraft1.edit_player_wizard_form">
+      <field name="name">warcraft1 edit player wizard</field>
+      <field name="model">warcraft1.edit_player_state1</field>
+      <field name="arch" type="xml">
+        <form string="Battle wizard warcraft form">
+     
+          <sheet>
+                <group>
+                  <field name = "name" placeholder="Nombre Jugador" style="color:red;"/>
+                  <field name = "avatar" widget="image"/>
+                  <field name = "is_player"/>
+                  <field name = "colony_count"/>
+                  </group>
+            
+           <notebook>
+            <page>
+                  <group>
+                    <field name = "bandoimg" widget="image"/>
+                    <field name = "anyo_nacimiento" placeholder="Escribe tu anyo de nacimiento"  />
+                     <field name = "password" placeholder="Escribe una contraseña" />            
+                  </group>
+              </page>
+            </notebook>
+          </sheet>
+              <footer>
+                        <button name="edit_player" type="object"
+                                string="Create" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                  </footer>
+   
+        </form>
+      </field>
+    </record> 
+
+<!-- ACTION Edit player-->
+ <record id="action_edit_player" model="ir.actions.act_window">
+            <field name="name">Edit Player</field>
+            <field name="res_model">warcraft1.edit_player_state1</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="type">ir.actions.act_window</field>
+</record> 
+
   <!-- explicit list view definition -->
 
    <record model="ir.ui.view" id="warcraft1.playertree">
@@ -112,6 +158,7 @@
                   <field name = "is_player"/>
                   <field name = "colony"/>
                   <field name = "colony_count"/>
+              <button name="%(action_create_battle)d" type="action" string="Crear Batalla" class="oe_highlight"/>
 
 
                   </group>
